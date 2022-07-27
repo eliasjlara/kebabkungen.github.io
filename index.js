@@ -349,10 +349,18 @@ function animate() {
         c.fillStyle = "#372a2a";
         roundedRect(c, innerWidth / 2 - 200, innerHeight / 2 - innerHeight / 1.2 / 2, 400, innerHeight / 1.2, 15);
 
-        c.font = "50px Times white";
+        c.font = "70px Times white";
         c.fillStyle = "white";
         c.textAlign = "center";
         c.fillText("Results", innerWidth / 2, 150);
+
+        c.font = "50px Times white";
+        c.fillStyle = "white";
+        c.textAlign = "center";
+        c.fillText("You made it", innerWidth / 2, 300);
+        c.fillText("below 30.", innerWidth / 2, 360);
+        c.fillText("You truly", innerWidth / 2, 480);
+        c.fillText("are M.A.T.S", innerWidth / 2, 540);
 
         c.fillStyle = "green";
         roundedRect(c, innerWidth / 2 - 100, 650, 200, 50, 30);
