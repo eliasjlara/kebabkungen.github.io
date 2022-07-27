@@ -467,8 +467,8 @@ function animate() {
           c.font = "50px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You did not make it", innerWidth / 2, 300);
-          c.fillText("below 30.", innerWidth / 2, 360);
+          c.fillText("You did not make", innerWidth / 2, 300);
+          c.fillText("it below 30.", innerWidth / 2, 360);
           c.fillText("You are", innerWidth / 2, 480);
           c.fillText("not M.A.T.S", innerWidth / 2, 540);
 
@@ -490,19 +490,19 @@ function animate() {
           roundedRect(c, 0, 0, innerWidth, innerHeight, 15);
 
           c.font = "200px Times white";
-          c.fillStyle = "white";
+          c.fillStyle = "red";
           c.textAlign = "center";
           c.fillText("Results", innerWidth / 2, 325);
 
           c.font = "125px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You did not make it", innerWidth / 2, 650);
-          c.fillText("below 30.", innerWidth / 2, 800);
+          c.fillText("You did not make", innerWidth / 2, 650);
+          c.fillText("it below 30.", innerWidth / 2, 800);
           c.fillText("You are", innerWidth / 2, 1050);
           c.fillText("not M.A.T.S", innerWidth / 2, 1200);
 
-          c.fillStyle = "green";
+          c.fillStyle = "red";
           roundedRect(c, innerWidth / 2 - 325, innerHeight - 300, 650, 150, 30);
 
           c.font = "80px Times white";
