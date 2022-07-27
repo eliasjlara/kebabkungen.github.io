@@ -11,16 +11,6 @@ var day = 1;
 
 if (innerWidth > innerHeight) {
   squareSize = (innerHeight - innerHeight / 4) / mapSize;
-
-  c.font = "80px Times white";
-  c.fillStyle = "white";
-  c.textAlign = "center";
-  c.fillText("M.A.T.S", innerWidth / 2, 80);
-
-  c.font = "60px Times white";
-  c.fillStyle = "white";
-  c.textAlign = "left";
-  c.fillText("Day - " + day, canvas.width / 2 - (mapSize / 2) * squareSize, 160);
 } else {
   squareSize = (innerWidth - innerWidth / 16) / mapSize;
   yOffset = innerHeight / 18;
@@ -161,6 +151,9 @@ ground.src = "img/ground.png";
 const dark = new Image();
 dark.src = "img/dark_wall.png";
 
+const tut = new Image();
+tut.src = "img/moveTut2.png";
+
 map.forEach((row, i) => {
   row.forEach((symbol, j) => {
     switch (symbol) {
@@ -247,168 +240,286 @@ boundaries.forEach((boundary) => {
   }
 });
 
+var tutClear = false;
+
 const speed = squareSize;
 var moves = 0;
 
 const path = new Path2D();
 
-function animate() {
-  requestAnimationFrame(animate);
-
-  c.clearRect(player.position.x - squareSize / 2, player.position.y - squareSize / 2, squareSize, squareSize);
-
+if (tutClear === false) {
   if (innerWidth > innerHeight) {
-    c.clearRect(innerWidth / 2 - 50, 100, 1000, 80);
+    c.font = "80px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("M.A.T.S", innerWidth / 2, 80);
 
     c.font = "60px Times white";
     c.fillStyle = "white";
-    c.textAlign = "right";
-    c.fillText("Swipes - " + moves + "/30", canvas.width / 2 - (mapSize / 2) * squareSize + squareSize * 16, 160);
-  } else {
-    c.clearRect(innerWidth / 6, 420, 1000, 160);
+    c.textAlign = "center";
+    c.fillText("Day - " + day, innerWidth / 2, 160);
 
-    c.font = "120px Times white";
+    c.font = "60px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Swipes - " + moves + "/30", innerWidth / 2, 540);
-  }
+    c.fillText("Use w, a, s, d to move", innerWidth / 2, 260);
 
-  if (keys.w.pressed && lastKey === "w") {
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
+    c.font = "60px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Get under 30", innerWidth / 2, 340);
+
+    c.font = "60px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Click to begin", innerWidth / 2, 420);
+
+    tut.onload = function () {
+      c.drawImage(tut, innerWidth / 2 - 350 / 2, 200, 350, 600);
+    };
+  } else {
+    tut.onload = function () {
+      c.drawImage(tut, innerWidth / 2 - innerWidth / 1.3 / 2, 420, innerWidth / 1.3, innerHeight / 1.3);
+    };
+    c.font = "100px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Swipe to move", innerWidth / 2, 600);
+
+    c.font = "100px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Get under 30", innerWidth / 2, 740);
+
+    c.font = "100px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Tap to begin", innerWidth / 2, 880);
+  }
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (tutClear === true) {
+    c.clearRect(player.position.x - squareSize / 2, player.position.y - squareSize / 2, squareSize, squareSize);
+
+    if (innerWidth > innerHeight) {
+      c.clearRect(innerWidth / 2 - 50, 100, 1000, 80);
+
+      c.font = "60px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "right";
+      c.fillText("Swipes - " + moves + "/30", canvas.width / 2 - (mapSize / 2) * squareSize + squareSize * 16, 160);
+    } else {
+      c.clearRect(innerWidth / 6, 420, 1000, 160);
+
+      c.font = "120px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Swipes - " + moves + "/30", innerWidth / 2, 540);
+    }
+
+    if (keys.w.pressed && lastKey === "w") {
+      for (let i = 0; i < boundaries.length; i++) {
+        const boundary = boundaries[i];
+        if (
+          circleCollidesWithRectangle({
+            circle: {
+              ...player,
+              velocity: {
+                x: 0,
+                y: -speed,
+              },
+            },
+            rectangle: boundary,
+          })
+        ) {
+          player.velocity.y = 0;
+          break;
+        } else {
+          player.velocity.y = -speed;
+        }
+      }
+    } else if (keys.a.pressed && lastKey === "a") {
+      player.velocity.x = -speed;
+    } else if (keys.s.pressed && lastKey === "s") {
+      for (let i = 0; i < boundaries.length; i++) {
+        const boundary = boundaries[i];
+        if (
+          circleCollidesWithRectangle({
+            circle: {
+              ...player,
+              velocity: {
+                x: 0,
+                y: speed,
+              },
+            },
+            rectangle: boundary,
+          })
+        ) {
+          player.velocity.y = 0;
+          break;
+        } else {
+          player.velocity.y = speed;
+        }
+      }
+    } else if (keys.d.pressed && lastKey === "d") {
+      player.velocity.x = +speed;
+    }
+
+    let count = boundaries.forEach((boundary) => {
+      boundary.draw();
       if (
         circleCollidesWithRectangle({
-          circle: {
-            ...player,
-            velocity: {
-              x: 0,
-              y: -speed,
-            },
-          },
+          circle: player,
           rectangle: boundary,
         })
       ) {
+        player.velocity.x = 0;
         player.velocity.y = 0;
-        break;
-      } else {
-        player.velocity.y = -speed;
       }
-    }
-  } else if (keys.a.pressed && lastKey === "a") {
-    player.velocity.x = -speed;
-  } else if (keys.s.pressed && lastKey === "s") {
-    for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
+
       if (
-        circleCollidesWithRectangle({
-          circle: {
-            ...player,
-            velocity: {
-              x: 0,
-              y: speed,
-            },
-          },
-          rectangle: boundary,
-        })
+        boundary.position.x === player.position.x - squareSize / 2 &&
+        boundary.position.y === player.position.y - squareSize / 2 &&
+        boundary.image === ground
       ) {
-        player.velocity.y = 0;
-        break;
-      } else {
-        player.velocity.y = speed;
+        boundary.image = paintImg;
+        winCon -= 1;
       }
-    }
-  } else if (keys.d.pressed && lastKey === "d") {
-    player.velocity.x = +speed;
+
+      if (winCon === 0 && moves <= 30) {
+        if (innerWidth > innerHeight) {
+          c.font = "120px Times White";
+
+          c.fillStyle = "#372a2a";
+          roundedRect(c, innerWidth / 2 - 200, innerHeight / 2 - innerHeight / 1.2 / 2, 400, innerHeight / 1.2, 15);
+
+          c.font = "70px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Results", innerWidth / 2, 150);
+
+          c.font = "50px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("You made it", innerWidth / 2, 300);
+          c.fillText("below 30.", innerWidth / 2, 360);
+          c.fillText("You truly", innerWidth / 2, 480);
+          c.fillText("are M.A.T.S", innerWidth / 2, 540);
+
+          c.fillStyle = "green";
+          roundedRect(c, innerWidth / 2 - 100, 650, 200, 50, 30);
+
+          c.font = "30px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Share", innerWidth / 2, 685);
+
+          //create your shape data in a Path2D object
+          path.rect(innerWidth / 2 - 100, 650, 200, 50);
+          path.closePath();
+        } else {
+          c.font = "200px Times White";
+
+          c.fillStyle = "#372a2a";
+          roundedRect(c, 0, 0, innerWidth, innerHeight, 15);
+
+          c.font = "200px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Results", innerWidth / 2, 325);
+
+          c.font = "125px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("You made it", innerWidth / 2, 650);
+          c.fillText("below 30.", innerWidth / 2, 800);
+          c.fillText("You truly", innerWidth / 2, 1050);
+          c.fillText("are M.A.T.S", innerWidth / 2, 1200);
+
+          c.fillStyle = "green";
+          roundedRect(c, innerWidth / 2 - 325, innerHeight - 300, 650, 150, 30);
+
+          c.font = "80px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Share results", innerWidth / 2, innerHeight - 195);
+
+          //create your shape data in a Path2D object
+          path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
+          path.closePath();
+        }
+        cancelAnimationFrame(AnimationId);
+      } else if (winCon === 0 && moves > 30) {
+        if (innerWidth > innerHeight) {
+          c.font = "120px Times White";
+
+          c.fillStyle = "#372a2a";
+          roundedRect(c, innerWidth / 2 - 200, innerHeight / 2 - innerHeight / 1.2 / 2, 400, innerHeight / 1.2, 15);
+
+          c.font = "70px Times white";
+          c.fillStyle = "red";
+          c.textAlign = "center";
+          c.fillText("Results", innerWidth / 2, 150);
+
+          c.font = "50px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("You did not make it", innerWidth / 2, 300);
+          c.fillText("below 30.", innerWidth / 2, 360);
+          c.fillText("You are", innerWidth / 2, 480);
+          c.fillText("not M.A.T.S", innerWidth / 2, 540);
+
+          c.fillStyle = "red";
+          roundedRect(c, innerWidth / 2 - 100, 650, 200, 50, 30);
+
+          c.font = "30px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Share", innerWidth / 2, 685);
+
+          //create your shape data in a Path2D object
+          path.rect(innerWidth / 2 - 100, 650, 200, 50);
+          path.closePath();
+        } else {
+          c.font = "200px Times White";
+
+          c.fillStyle = "#372a2a";
+          roundedRect(c, 0, 0, innerWidth, innerHeight, 15);
+
+          c.font = "200px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Results", innerWidth / 2, 325);
+
+          c.font = "125px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("You did not make it", innerWidth / 2, 650);
+          c.fillText("below 30.", innerWidth / 2, 800);
+          c.fillText("You are", innerWidth / 2, 1050);
+          c.fillText("not M.A.T.S", innerWidth / 2, 1200);
+
+          c.fillStyle = "green";
+          roundedRect(c, innerWidth / 2 - 325, innerHeight - 300, 650, 150, 30);
+
+          c.font = "80px Times white";
+          c.fillStyle = "white";
+          c.textAlign = "center";
+          c.fillText("Share results", innerWidth / 2, innerHeight - 195);
+
+          //create your shape data in a Path2D object
+          path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
+          path.closePath();
+        }
+        cancelAnimationFrame(AnimationId);
+      }
+    });
+
+    player.update();
   }
-
-  let count = boundaries.forEach((boundary) => {
-    boundary.draw();
-    if (
-      circleCollidesWithRectangle({
-        circle: player,
-        rectangle: boundary,
-      })
-    ) {
-      player.velocity.x = 0;
-      player.velocity.y = 0;
-    }
-
-    if (
-      boundary.position.x === player.position.x - squareSize / 2 &&
-      boundary.position.y === player.position.y - squareSize / 2 &&
-      boundary.image === ground
-    ) {
-      boundary.image = paintImg;
-      winCon -= 1;
-    }
-
-    if (winCon === 0) {
-      if (innerWidth > innerHeight) {
-        c.font = "120px Times White";
-
-        c.fillStyle = "#372a2a";
-        roundedRect(c, innerWidth / 2 - 200, innerHeight / 2 - innerHeight / 1.2 / 2, 400, innerHeight / 1.2, 15);
-
-        c.font = "70px Times white";
-        c.fillStyle = "white";
-        c.textAlign = "center";
-        c.fillText("Results", innerWidth / 2, 150);
-
-        c.font = "50px Times white";
-        c.fillStyle = "white";
-        c.textAlign = "center";
-        c.fillText("You made it", innerWidth / 2, 300);
-        c.fillText("below 30.", innerWidth / 2, 360);
-        c.fillText("You truly", innerWidth / 2, 480);
-        c.fillText("are M.A.T.S", innerWidth / 2, 540);
-
-        c.fillStyle = "green";
-        roundedRect(c, innerWidth / 2 - 100, 650, 200, 50, 30);
-
-        c.font = "30px Times white";
-        c.fillStyle = "white";
-        c.textAlign = "center";
-        c.fillText("Share", innerWidth / 2, 685);
-
-        //create your shape data in a Path2D object
-        path.rect(innerWidth / 2 - 100, 650, 200, 50);
-        path.closePath();
-      } else {
-        c.font = "200px Times White";
-
-        c.fillStyle = "#372a2a";
-        roundedRect(c, 0, 0, innerWidth, innerHeight, 15);
-
-        c.font = "200px Times white";
-        c.fillStyle = "white";
-        c.textAlign = "center";
-        c.fillText("Results", innerWidth / 2, 325);
-
-        c.font = "125px Times white";
-        c.fillStyle = "white";
-        c.textAlign = "center";
-        c.fillText("You made it", innerWidth / 2, 650);
-        c.fillText("below 30.", innerWidth / 2, 800);
-        c.fillText("You truly", innerWidth / 2, 1050);
-        c.fillText("are M.A.T.S", innerWidth / 2, 1200);
-
-        c.fillStyle = "green";
-        roundedRect(c, innerWidth / 2 - 325, innerHeight - 300, 650, 150, 30);
-
-        c.font = "80px Times white";
-        c.fillStyle = "white";
-        c.textAlign = "center";
-        c.fillText("Share results", innerWidth / 2, innerHeight - 195);
-
-        //create your shape data in a Path2D object
-        path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
-        path.closePath();
-      }
-      cancelAnimationFrame(AnimationId);
-    }
-  });
-
-  player.update();
 }
 
 animate();
@@ -533,6 +644,33 @@ document.addEventListener(
   function (e) {
     const XY = getXY(canvas, e);
     //use the shape data to determine if there is a collision
+
+    if (tutClear === false) {
+      c.clearRect(0, 0, innerWidth, innerHeight);
+      tutClear = true;
+
+      if (innerWidth > innerHeight) {
+        c.font = "80px Times white";
+        c.fillStyle = "white";
+        c.textAlign = "center";
+        c.fillText("M.A.T.S", innerWidth / 2, 80);
+
+        c.font = "60px Times white";
+        c.fillStyle = "white";
+        c.textAlign = "left";
+        c.fillText("Day - " + day, canvas.width / 2 - (mapSize / 2) * squareSize, 160);
+      } else {
+        c.font = "160px Times white";
+        c.fillStyle = "white";
+        c.textAlign = "center";
+        c.fillText("M.A.T.S", innerWidth / 2, 180);
+
+        c.font = "120px Times white";
+        c.fillStyle = "white";
+        c.textAlign = "center";
+        c.fillText("Day - 1", innerWidth / 2, 360);
+      }
+    }
 
     if (c.isPointInPath(path, XY.x, XY.y)) {
       var copyText =
