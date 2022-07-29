@@ -302,6 +302,8 @@ function between(x, min, max) {
   return x >= min && x <= max;
 }
 
+var shareText = "Share";
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -421,7 +423,7 @@ function animate() {
           c.font = "30px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("Share", innerWidth / 2, 685);
+          c.fillText(shareText, innerWidth / 2, 685);
 
           //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 100, 650, 200, 50);
@@ -484,7 +486,7 @@ function animate() {
           c.font = "30px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("Share", innerWidth / 2, 685);
+          c.fillText(shareText, innerWidth / 2, 685);
 
           //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 100, 650, 200, 50);
@@ -703,7 +705,7 @@ document.addEventListener(
 
       navigator.clipboard.writeText(copyText);
 
-      alert("Results copied to clipboard");
+      shareText = "Copied!";
     }
   },
   false
