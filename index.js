@@ -602,8 +602,8 @@ function animate() {
           c.textAlign = "center";
           c.fillText("You made it", innerWidth / 2, vh * 35);
           c.fillText("in " + moves + " moves.", innerWidth / 2, vh * 45);
-          c.fillText("You truly", innerWidth / 2, vh * 60);
-          c.fillText("are M.A.T.S", innerWidth / 2, vh * 70);
+          c.fillText("You are", innerWidth / 2, vh * 60);
+          c.fillText("not M.A.T.S", innerWidth / 2, vh * 70);
 
           c.fillStyle = "red";
           roundedRect(c, innerWidth / 2 - 325, vh * 85 - 75, 650, 150, 30);
