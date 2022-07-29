@@ -803,14 +803,25 @@ document.addEventListener(
     }
 
     if (c.isPointInPath(path, XY.x, XY.y)) {
-      var copyText =
-        "       M.A.T.S. \n    Day-" +
-        day +
-        ": " +
-        moves +
-        "/30" +
-        "\n\n" +
-        "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️";
+      if (moves <= 30) {
+        var copyText =
+          "       M.A.T.S. \n    Day-" +
+          day +
+          ": " +
+          moves +
+          "/30" +
+          "\n\n" +
+          "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️";
+      } else {
+        var copyText =
+          "       M.A.T.S. \n    Day-" +
+          day +
+          ": " +
+          moves +
+          "/30" +
+          "\n\n" +
+          "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️";
+      }
 
       navigator.clipboard.writeText(copyText);
 
