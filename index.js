@@ -700,11 +700,10 @@ document.addEventListener(
         "/30" +
         "\n\n" +
         "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️";
-      navigator.clipboard.writeText(copyText).then(() => {
-        // Alert the user that the action took place.
-        // Nobody likes hidden stuff being done under the hood!
-        alert("Results copied to clipboard");
-      });
+
+      navigator.clipboard.writeText(copyText);
+
+      alert("Results copied to clipboard");
     }
   },
   false
