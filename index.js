@@ -1,6 +1,9 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
+let vh = window.innerHeight * 0.01;
+let wh = window.innerWidth * 0.01;
+
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
@@ -12,18 +15,12 @@ var day = 1;
 if (innerWidth > innerHeight) {
   squareSize = (innerHeight - innerHeight / 4) / mapSize;
 } else {
-  squareSize = (innerWidth - innerWidth / 16) / mapSize;
-  yOffset = innerHeight / 18;
+  //c.rect(wh * 0.5, innerHeight - (vh * 5 + squareSize * 16 + 0.5 * wh), wh * 99, wh * 99);
 
-  c.font = "160px Times white";
-  c.fillStyle = "white";
-  c.textAlign = "center";
-  c.fillText("M.A.T.S", innerWidth / 2, 180);
+  squareSize = (wh * 97.5) / 16;
+  yOffset = innerHeight / 2 - wh * 50;
 
-  c.font = "120px Times white";
-  c.fillStyle = "white";
-  c.textAlign = "center";
-  c.fillText("Day - 1", innerWidth / 2, 360);
+  innerHeight - (vh * 5 + squareSize * 16 + vh * 3);
 }
 
 class Boundary {
@@ -106,7 +103,7 @@ const keys = {
 
 let lastKey = "";
 
-const map = [
+/*const map = [
   ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
@@ -123,9 +120,9 @@ const map = [
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-];
+]; */
 
-/* const map = [
+const map = [
   ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
@@ -142,7 +139,7 @@ const map = [
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-]; */
+];
 
 const wall = new Image();
 wall.src = "img/wall.png";
@@ -152,7 +149,9 @@ const dark = new Image();
 dark.src = "img/dark_wall.png";
 
 const tut = new Image();
-tut.src = "img/moveTut2.png";
+tut.src = "img/tut3.png";
+
+//c.rect(wh * 0.5, innerHeight - (vh * 5 + squareSize * 16 + 0.5 * wh), wh * 99, wh * 99);
 
 map.forEach((row, i) => {
   row.forEach((symbol, j) => {
@@ -249,52 +248,83 @@ const path = new Path2D();
 
 if (tutClear === false) {
   if (innerWidth > innerHeight) {
+    c.textBaseline = "bottom";
+
     c.font = "80px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("M.A.T.S", innerWidth / 2, 80);
+    c.fillText("M.A.T.S", innerWidth / 2, 15 * vh);
+
+    //innerHeight - (vh * 5 + squareSize * 16 + vh * 3)
 
     c.font = "60px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Day - " + day, innerWidth / 2, 160);
+    c.fillText("Day - " + day, innerWidth / 2, 22 * vh);
 
     c.font = "60px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Use w, a, s, d to move", innerWidth / 2, 260);
+    c.fillText("Use w, a, s, d to move", innerWidth / 2, 35 * vh);
 
     c.font = "60px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Get under 30", innerWidth / 2, 340);
+    c.fillText("Get under 30", innerWidth / 2, 44 * vh);
 
     c.font = "60px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Click to begin", innerWidth / 2, 420);
+    c.fillText("Click to begin", innerWidth / 2, 53 * vh);
 
     tut.onload = function () {
-      c.drawImage(tut, innerWidth / 2 - 350 / 2, 200, 350, 600);
+      c.drawImage(
+        tut,
+        innerWidth / 2 - (innerHeight - 60 * vh) / 2,
+        innerHeight - (47 * vh) / 2 - (innerHeight - 60 * vh) / 2,
+        innerHeight - 60 * vh,
+        innerHeight - 60 * vh
+      );
     };
   } else {
     tut.onload = function () {
-      c.drawImage(tut, innerWidth / 2 - innerWidth / 1.3 / 2, 420, innerWidth / 1.3, innerHeight / 1.3);
+      c.drawImage(
+        tut,
+        innerWidth / 2 - (innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200)) / 2,
+        (innerHeight / 2 - wh * 50) / 2 + 48 * vh + 50,
+        innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200),
+        innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200)
+      );
     };
-    c.font = "100px Times white";
+
+    innerHeight - (innerHeight / 2 - wh * 50) / 2;
+
+    c.textBaseline = "middle";
+
+    c.font = "160px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Swipe to move", innerWidth / 2, 600);
+    c.fillText("M.A.T.S", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2);
+
+    c.font = "140px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Day - " + day, innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 10 * vh);
 
     c.font = "100px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Get under 30", innerWidth / 2, 740);
+    c.fillText("Swipe to move", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 26 * vh);
 
     c.font = "100px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Tap to begin", innerWidth / 2, 880);
+    c.fillText("Get under 30", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 34 * vh);
+
+    c.font = "100px Times white";
+    c.fillStyle = "white";
+    c.textAlign = "center";
+    c.fillText("Tap to begin", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 42 * vh);
   }
 }
 
@@ -303,27 +333,48 @@ function between(x, min, max) {
 }
 
 var shareText = "Copy results";
+paintBorder = false;
 
 function animate() {
   requestAnimationFrame(animate);
+
+  if (paintBorder === true) {
+    c.clearRect(0, yOffset + 1.5 * wh, wh * 100, wh * 100);
+
+    c.beginPath();
+    c.lineWidth = 1 * wh;
+    c.strokeStyle = "rgba(255, 255, 255, 0.5)";
+    c.rect(wh * 0.5, yOffset + 2 * wh, wh * 99, wh * 99);
+    c.stroke();
+
+    wh * 0.5, innerHeight - (squareSize * 16 + 2 * wh), wh * 99, wh * 99;
+  }
 
   if (tutClear === true) {
     c.clearRect(player.position.x - squareSize / 2, player.position.y - squareSize / 2, squareSize, squareSize);
 
     if (innerWidth > innerHeight) {
-      c.clearRect(innerWidth / 2 - 50, 100, 1000, 80);
+      c.clearRect(innerWidth / 2 - 60, innerHeight - squareSize * mapSize - 2 * vh - 60, 1000, 80);
 
       c.font = "60px Times white";
       c.fillStyle = "white";
       c.textAlign = "right";
-      c.fillText("Swipes - " + moves + "/30", canvas.width / 2 - (mapSize / 2) * squareSize + squareSize * 16, 160);
+      c.fillText(
+        "Swipes - " + moves + "/30",
+        canvas.width / 2 - (mapSize / 2) * squareSize + squareSize * 16,
+        innerHeight - squareSize * mapSize - 2 * vh
+      );
     } else {
-      c.clearRect(innerWidth / 6, 420, 1000, 160);
+      c.textBaseline = "middle";
 
-      c.font = "120px Times white";
+      c.clearRect(0, innerHeight - (innerHeight / 2 - wh * 50) / 2 - 100, innerWidth / 2, 200);
+
+      c.font = "100px Times white";
       c.fillStyle = "white";
       c.textAlign = "center";
-      c.fillText("Swipes - " + moves + "/30", innerWidth / 2, 540);
+      c.fillText(moves + "/30", innerWidth / 2 - innerWidth / 4, innerHeight - (innerHeight / 2 - wh * 50) / 2);
+
+      paintBorder = true;
     }
 
     if (keys.w.pressed && lastKey === "w") {
@@ -402,58 +453,81 @@ function animate() {
           c.font = "120px Times White";
 
           c.fillStyle = "#372a2a";
-          roundedRect(c, innerWidth / 2 - 200, innerHeight / 2 - innerHeight / 1.2 / 2, 400, innerHeight / 1.2, 15);
+          roundedRect(c, innerWidth / 2 - (30 * wh) / 2, (15 * vh) / 2, 30 * wh, 85 * vh, 15);
+
+          c.textBaseline = "top";
 
           c.font = "70px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("Results", innerWidth / 2, 150);
+          c.fillText("Results", innerWidth / 2, 13 * vh);
+
+          c.textBaseline = "bottom";
 
           c.font = "50px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You made it", innerWidth / 2, 300);
-          c.fillText("in " + moves + " moves.", innerWidth / 2, 360);
-          c.fillText("You truly", innerWidth / 2, 480);
-          c.fillText("are M.A.T.S", innerWidth / 2, 540);
+          c.fillText("You made it", innerWidth / 2, innerHeight / 2 - 14 * vh);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, innerHeight / 2 - 6 * vh);
+
+          c.textBaseline = "top";
+
+          c.fillText("You truly", innerWidth / 2, innerHeight / 2 + 6 * vh);
+          c.fillText("are M.A.T.S", innerWidth / 2, innerHeight / 2 + 14 * vh);
 
           c.fillStyle = "green";
-          roundedRect(c, innerWidth / 2 - 100, 650, 200, 50, 30);
+          roundedRect(
+            c,
+            innerWidth / 2 - (30 * wh) / 4,
+            innerHeight - 13 * vh - (85 * vh) / 12,
+            (30 * wh) / 2,
+            (85 * vh) / 12,
+            30
+          );
+
+          c.textBaseline = "middle";
 
           c.font = "30px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText(shareText, innerWidth / 2, 685);
+          c.fillText(
+            shareText,
+            innerWidth / 2 - (30 * wh) / 4 + (30 * wh) / 2 / 2,
+            innerHeight - 13 * vh - (85 * vh) / 12 / 2
+          );
 
-          //create your shape data in a Path2D object
-          path.rect(innerWidth / 2 - 100, 650, 200, 50);
+          path.rect(innerWidth / 2 - 100, innerHeight - 13 * vh - (85 * vh) / 12, (30 * wh) / 2, (85 * vh) / 12);
           path.closePath();
         } else {
+          c.textBaseline = "bottom";
+
           c.font = "200px Times White";
 
           c.fillStyle = "#372a2a";
           roundedRect(c, 0, 0, innerWidth, innerHeight, 15);
 
-          c.font = "200px Times white";
+          c.font = "160px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("Results", innerWidth / 2, 325);
+          c.fillText("Results", innerWidth / 2, vh * 20);
 
           c.font = "125px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You made it", innerWidth / 2, 650);
-          c.fillText("in " + moves + " moves.", innerWidth / 2, 800);
-          c.fillText("You truly", innerWidth / 2, 1050);
-          c.fillText("are M.A.T.S", innerWidth / 2, 1200);
+          c.fillText("You made it", innerWidth / 2, vh * 35);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, vh * 45);
+          c.fillText("You truly", innerWidth / 2, vh * 60);
+          c.fillText("are M.A.T.S", innerWidth / 2, vh * 70);
 
           c.fillStyle = "green";
-          roundedRect(c, innerWidth / 2 - 325, innerHeight - 300, 650, 150, 30);
+          roundedRect(c, innerWidth / 2 - 325, vh * 85 - 75, 650, 150, 30);
+
+          c.textBaseline = "middle";
 
           c.font = "80px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText(shareText, innerWidth / 2, innerHeight - 195);
+          c.fillText(shareText, innerWidth / 2, vh * 85);
 
           //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
@@ -465,58 +539,81 @@ function animate() {
           c.font = "120px Times White";
 
           c.fillStyle = "#372a2a";
-          roundedRect(c, innerWidth / 2 - 200, innerHeight / 2 - innerHeight / 1.2 / 2, 400, innerHeight / 1.2, 15);
+          roundedRect(c, innerWidth / 2 - (30 * wh) / 2, (15 * vh) / 2, 30 * wh, 85 * vh, 15);
+
+          c.textBaseline = "top";
 
           c.font = "70px Times white";
           c.fillStyle = "red";
           c.textAlign = "center";
-          c.fillText("Results", innerWidth / 2, 150);
+          c.fillText("Results", innerWidth / 2, 13 * vh);
+
+          c.textBaseline = "bottom";
 
           c.font = "50px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You made it", innerWidth / 2, 300);
-          c.fillText("in " + moves + " moves.", innerWidth / 2, 360);
-          c.fillText("You are", innerWidth / 2, 480);
-          c.fillText("not M.A.T.S", innerWidth / 2, 540);
+          c.fillText("You made it", innerWidth / 2, innerHeight / 2 - 14 * vh);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, innerHeight / 2 - 6 * vh);
+
+          c.textBaseline = "top";
+
+          c.fillText("You are", innerWidth / 2, innerHeight / 2 + 6 * vh);
+          c.fillText("not M.A.T.S", innerWidth / 2, innerHeight / 2 + 14 * vh);
 
           c.fillStyle = "red";
-          roundedRect(c, innerWidth / 2 - 100, 650, 200, 50, 30);
+          roundedRect(
+            c,
+            innerWidth / 2 - (30 * wh) / 4,
+            innerHeight - 13 * vh - (85 * vh) / 12,
+            (30 * wh) / 2,
+            (85 * vh) / 12,
+            30
+          );
+
+          c.textBaseline = "middle";
 
           c.font = "30px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText(shareText, innerWidth / 2, 685);
+          c.fillText(
+            shareText,
+            innerWidth / 2 - (30 * wh) / 4 + (30 * wh) / 2 / 2,
+            innerHeight - 13 * vh - (85 * vh) / 12 / 2
+          );
 
-          //create your shape data in a Path2D object
-          path.rect(innerWidth / 2 - 100, 650, 200, 50);
+          path.rect(innerWidth / 2 - 100, innerHeight - 13 * vh - (85 * vh) / 12, (30 * wh) / 2, (85 * vh) / 12);
           path.closePath();
         } else {
+          c.textBaseline = "bottom";
+
           c.font = "200px Times White";
 
           c.fillStyle = "#372a2a";
           roundedRect(c, 0, 0, innerWidth, innerHeight, 15);
 
-          c.font = "200px Times white";
+          c.font = "160px Times white";
           c.fillStyle = "red";
           c.textAlign = "center";
-          c.fillText("Results", innerWidth / 2, 325);
+          c.fillText("Results", innerWidth / 2, vh * 20);
 
           c.font = "125px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You made it", innerWidth / 2, 650);
-          c.fillText("in " + moves + " moves.", innerWidth / 2, 800);
-          c.fillText("You are", innerWidth / 2, 1050);
-          c.fillText("not M.A.T.S", innerWidth / 2, 1200);
+          c.fillText("You made it", innerWidth / 2, vh * 35);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, vh * 45);
+          c.fillText("You truly", innerWidth / 2, vh * 60);
+          c.fillText("are M.A.T.S", innerWidth / 2, vh * 70);
 
           c.fillStyle = "red";
-          roundedRect(c, innerWidth / 2 - 325, innerHeight - 300, 650, 150, 30);
+          roundedRect(c, innerWidth / 2 - 325, vh * 85 - 75, 650, 150, 30);
+
+          c.textBaseline = "middle";
 
           c.font = "80px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText(shareText, innerWidth / 2, innerHeight - 195);
+          c.fillText(shareText, innerWidth / 2, vh * 85);
 
           //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
@@ -671,25 +768,37 @@ document.addEventListener(
       tutClear = true;
 
       if (innerWidth > innerHeight) {
+        c.textBaseline = "middle";
+
         c.font = "80px Times white";
         c.fillStyle = "white";
         c.textAlign = "center";
-        c.fillText("M.A.T.S", innerWidth / 2, 80);
+        c.fillText("M.A.T.S", innerWidth / 2, (innerHeight - squareSize * mapSize) / 3);
+
+        c.textBaseline = "bottom";
 
         c.font = "60px Times white";
         c.fillStyle = "white";
         c.textAlign = "left";
-        c.fillText("Day - " + day, canvas.width / 2 - (mapSize / 2) * squareSize, 160);
+        c.fillText(
+          "Day - " + day,
+          canvas.width / 2 - (mapSize / 2) * squareSize,
+          innerHeight - squareSize * mapSize - 2 * vh
+        );
       } else {
+        c.textBaseline = "middle";
+
         c.font = "160px Times white";
         c.fillStyle = "white";
         c.textAlign = "center";
-        c.fillText("M.A.T.S", innerWidth / 2, 180);
+        c.fillText("M.A.T.S", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2);
 
-        c.font = "120px Times white";
+        c.textBaseline = "middle";
+
+        c.font = "100px Times white";
         c.fillStyle = "white";
         c.textAlign = "center";
-        c.fillText("Day - 1", innerWidth / 2, 360);
+        c.fillText("Day - 1", innerWidth / 2 + innerWidth / 4, innerHeight - (innerHeight / 2 - wh * 50) / 2);
       }
     }
 
