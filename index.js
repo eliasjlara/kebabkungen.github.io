@@ -298,6 +298,10 @@ if (tutClear === false) {
   }
 }
 
+function between(x, min, max) {
+  return x >= min && x <= max;
+}
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -381,10 +385,12 @@ function animate() {
       }
 
       if (
-        boundary.position.x === player.position.x - squareSize / 2 &&
-        boundary.position.y === player.position.y - squareSize / 2 &&
+        between(player.position.x - squareSize / 2, boundary.position.x - 2, boundary.position.x + 2) &&
+        between(player.position.y - squareSize / 2, boundary.position.y - 2, boundary.position.y + 2) &&
         boundary.image === ground
       ) {
+        player.position.x = boundary.position.x + squareSize / 2;
+        player.position.y = boundary.position.y + squareSize / 2;
         boundary.image = paintImg;
         winCon -= 1;
       }
@@ -525,52 +531,50 @@ function animate() {
 animate();
 
 window.addEventListener("keydown", ({ key }) => {
-  switch (key) {
-    case "w":
-      keys.w.pressed = true;
-      lastKey = "w";
-      break;
-    case "a":
-      keys.a.pressed = true;
-      lastKey = "a";
-      break;
-    case "s":
-      keys.s.pressed = true;
-      lastKey = "s";
-      break;
-    case "d":
-      keys.d.pressed = true;
-      lastKey = "d";
-      break;
+  if (winCon !== 0) {
+    switch (key) {
+      case "w":
+        keys.w.pressed = true;
+        lastKey = "w";
+        break;
+      case "a":
+        keys.a.pressed = true;
+        lastKey = "a";
+        break;
+      case "s":
+        keys.s.pressed = true;
+        lastKey = "s";
+        break;
+      case "d":
+        keys.d.pressed = true;
+        lastKey = "d";
+        break;
+    }
   }
 });
 
 window.addEventListener("keyup", ({ key }) => {
-  switch (key) {
-    case "w":
-      keys.w.pressed = false;
-      moves += 1;
-      break;
-    case "a":
-      keys.a.pressed = false;
-      moves += 1;
-      break;
-    case "s":
-      keys.s.pressed = false;
-      moves += 1;
-      break;
-    case "d":
-      keys.d.pressed = false;
-      moves += 1;
-      break;
+  if (winCon !== 0) {
+    switch (key) {
+      case "w":
+        keys.w.pressed = false;
+        moves += 1;
+        break;
+      case "a":
+        keys.a.pressed = false;
+        moves += 1;
+        break;
+      case "s":
+        keys.s.pressed = false;
+        moves += 1;
+        break;
+      case "d":
+        keys.d.pressed = false;
+        moves += 1;
+        break;
+    }
   }
 });
-
-document.addEventListener("touchstart", handleTouchStart, false);
-document.addEventListener("touchmove", handleTouchMove, false);
-
-var xDown = null;
-var yDown = null;
 
 function getTouches(evt) {
   return (
@@ -579,11 +583,20 @@ function getTouches(evt) {
   ); // jQuery
 }
 
-function handleTouchStart(evt) {
-  const firstTouch = getTouches(evt)[0];
-  xDown = firstTouch.clientX;
-  yDown = firstTouch.clientY;
-}
+var xDown = null;
+var yDown = null;
+
+document.addEventListener(
+  "touchstart",
+  function (evt) {
+    const firstTouch = getTouches(evt)[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+  },
+  { passive: false }
+);
+
+document.addEventListener("touchmove", handleTouchMove, { passive: false });
 
 function handleTouchMove(evt) {
   if (!xDown || !yDown) {
@@ -618,7 +631,13 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;
 
-  moves += 1;
+  if (winCon !== 0) {
+    moves += 1;
+  }
+
+  if (evt.target == canvas) {
+    evt.preventDefault();
+  }
 }
 
 function roundedRect(ctx, x, y, width, height, radius) {
