@@ -302,7 +302,7 @@ function between(x, min, max) {
   return x >= min && x <= max;
 }
 
-var shareText = "Share";
+var shareText = "Copy results";
 
 function animate() {
   requestAnimationFrame(animate);
