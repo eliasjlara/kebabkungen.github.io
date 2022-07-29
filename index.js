@@ -453,7 +453,7 @@ function animate() {
           c.font = "80px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("Share results", innerWidth / 2, innerHeight - 195);
+          c.fillText(shareText, innerWidth / 2, innerHeight - 195);
 
           //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
@@ -516,7 +516,7 @@ function animate() {
           c.font = "80px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("Share results", innerWidth / 2, innerHeight - 195);
+          c.fillText(shareText, innerWidth / 2, innerHeight - 195);
 
           //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
