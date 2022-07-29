@@ -413,7 +413,7 @@ function animate() {
           c.fillStyle = "white";
           c.textAlign = "center";
           c.fillText("You made it", innerWidth / 2, 300);
-          c.fillText("below 30.", innerWidth / 2, 360);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, 360);
           c.fillText("You truly", innerWidth / 2, 480);
           c.fillText("are M.A.T.S", innerWidth / 2, 540);
 
@@ -443,7 +443,7 @@ function animate() {
           c.fillStyle = "white";
           c.textAlign = "center";
           c.fillText("You made it", innerWidth / 2, 650);
-          c.fillText("below 30.", innerWidth / 2, 800);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, 800);
           c.fillText("You truly", innerWidth / 2, 1050);
           c.fillText("are M.A.T.S", innerWidth / 2, 1200);
 
@@ -475,8 +475,8 @@ function animate() {
           c.font = "50px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You did not make", innerWidth / 2, 300);
-          c.fillText("it below 30.", innerWidth / 2, 360);
+          c.fillText("You made it", innerWidth / 2, 300);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, 360);
           c.fillText("You are", innerWidth / 2, 480);
           c.fillText("not M.A.T.S", innerWidth / 2, 540);
 
@@ -505,8 +505,8 @@ function animate() {
           c.font = "125px Times white";
           c.fillStyle = "white";
           c.textAlign = "center";
-          c.fillText("You did not make", innerWidth / 2, 650);
-          c.fillText("it below 30.", innerWidth / 2, 800);
+          c.fillText("You made it", innerWidth / 2, 650);
+          c.fillText("in " + moves + " moves.", innerWidth / 2, 800);
           c.fillText("You are", innerWidth / 2, 1050);
           c.fillText("not M.A.T.S", innerWidth / 2, 1200);
 
