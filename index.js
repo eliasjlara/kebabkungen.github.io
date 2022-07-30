@@ -827,24 +827,30 @@ document.addEventListener(
     if (c.isPointInPath(path, XY.x, XY.y)) {
       if (moves <= maxMoves) {
         var copyText =
-          "       M.A.T.S. \n    Day-" +
+          "M.A.T.S.\n " +
+          "Day-" +
           day +
           ": " +
           moves +
           "/" +
           maxMoves +
           "\n\n" +
-          "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️";
+          "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️" +
+          "\n\n" +
+          "https://kebabkungen.github.io.";
       } else {
         var copyText =
-          "       M.A.T.S. \n    Day-" +
+          "M.A.T.S.\n" +
+          "Day-" +
           day +
           ": " +
           moves +
           "/" +
           maxMoves +
           "\n\n" +
-          "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️";
+          "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️" +
+          "\n\n" +
+          "https://kebabkungen.github.io.";
       }
 
       navigator.clipboard.writeText(copyText);
