@@ -543,7 +543,6 @@ function animate() {
           c.textAlign = "center";
           c.fillText(shareText, innerWidth / 2, vh * 85);
 
-          //create your shape data in a Path2D object
           path.rect(innerWidth / 2 - 325, innerHeight - 300, 650, 150);
           path.closePath();
         }
@@ -819,7 +818,7 @@ document.addEventListener(
     if (c.isPointInPath(path, XY.x, XY.y)) {
       if (moves <= maxMoves) {
         var copyText =
-          "M.A.T.S.\n " +
+          "M.A.T.S.\n" +
           "Day-" +
           day +
           ": " +
