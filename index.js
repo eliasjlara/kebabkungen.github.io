@@ -16,8 +16,6 @@ var maxMoves = 35;
 if (innerWidth > innerHeight) {
   squareSize = (innerHeight - innerHeight / 4) / mapSize;
 } else {
-  //c.rect(wh * 0.5, innerHeight - (vh * 5 + squareSize * 16 + 0.5 * wh), wh * 99, wh * 99);
-
   squareSize = (wh * 97.5) / 16;
   yOffset = innerHeight / 2 - wh * 50;
 
@@ -153,8 +151,6 @@ dark.src = "img/dark_wall.png";
 const tut = new Image();
 tut.src = "img/tut3.png";
 
-//c.rect(wh * 0.5, innerHeight - (vh * 5 + squareSize * 16 + 0.5 * wh), wh * 99, wh * 99);
-
 map.forEach((row, i) => {
   row.forEach((symbol, j) => {
     switch (symbol) {
@@ -266,35 +262,6 @@ const path = new Path2D();
 
 if (tutClear === false) {
   if (innerWidth > innerHeight) {
-    c.textBaseline = "bottom";
-
-    c.font = "80px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("M.A.T.S", innerWidth / 2, 15 * vh);
-
-    //innerHeight - (vh * 5 + squareSize * 16 + vh * 3)
-
-    c.font = "60px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Day - " + day, innerWidth / 2, 22 * vh);
-
-    c.font = "60px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Use w, a, s, d to move", innerWidth / 2, 35 * vh);
-
-    c.font = "60px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Get under " + maxMoves, innerWidth / 2, 44 * vh);
-
-    c.font = "60px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Click to begin", innerWidth / 2, 53 * vh);
-
     tut.onload = function () {
       c.drawImage(
         tut,
@@ -303,6 +270,33 @@ if (tutClear === false) {
         innerHeight - 60 * vh,
         innerHeight - 60 * vh
       );
+
+      c.textBaseline = "bottom";
+
+      c.font = "80px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("M.A.T.S", innerWidth / 2, 15 * vh);
+
+      c.font = "60px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Day - " + day, innerWidth / 2, 22 * vh);
+
+      c.font = "60px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Use w, a, s, d to move", innerWidth / 2, 35 * vh);
+
+      c.font = "60px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Get under " + maxMoves, innerWidth / 2, 44 * vh);
+
+      c.font = "60px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Click to begin", innerWidth / 2, 53 * vh);
     };
   } else {
     tut.onload = function () {
@@ -313,36 +307,34 @@ if (tutClear === false) {
         innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200),
         innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200)
       );
+
+      c.textBaseline = "middle";
+
+      c.font = "160px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("M.A.T.S", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2);
+
+      c.font = "140px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Day - " + day, innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 10 * vh);
+
+      c.font = "100px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Swipe to move", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 26 * vh);
+
+      c.font = "100px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Get under " + maxMoves, innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 34 * vh);
+
+      c.font = "100px Times white";
+      c.fillStyle = "white";
+      c.textAlign = "center";
+      c.fillText("Tap to begin", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 42 * vh);
     };
-
-    innerHeight - (innerHeight / 2 - wh * 50) / 2;
-
-    c.textBaseline = "middle";
-
-    c.font = "160px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("M.A.T.S", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2);
-
-    c.font = "140px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Day - " + day, innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 10 * vh);
-
-    c.font = "100px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Swipe to move", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 26 * vh);
-
-    c.font = "100px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Get under " + maxMoves, innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 34 * vh);
-
-    c.font = "100px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("Tap to begin", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 42 * vh);
   }
 }
 
