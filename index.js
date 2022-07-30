@@ -10,7 +10,8 @@ canvas.height = innerHeight;
 mapSize = 16;
 
 var yOffset = 0;
-var day = 1;
+var day = 2;
+var maxMoves = 35;
 
 if (innerWidth > innerHeight) {
   squareSize = (innerHeight - innerHeight / 4) / mapSize;
@@ -26,12 +27,13 @@ if (innerWidth > innerHeight) {
 class Boundary {
   static width = squareSize;
   static height = squareSize;
-  constructor({ position, image, passable }) {
+  constructor({ position, image, passable, start }) {
     this.position = position;
     this.width = squareSize;
     this.height = squareSize;
     this.image = image;
     this.passable = passable;
+    this.start = start;
   }
 
   draw() {
@@ -107,16 +109,16 @@ const map = [
   ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", "0", " ", "0", "0", " ", "0", "0", "0", " ", " ", " ", " ", "#"],
+  ["#", " ", " ", " ", "0", "0", "0", "0", "0", "0", "0", " ", " ", " ", " ", "#"],
+  ["#", " ", " ", "0", "0", "0", "0", "0", "0", "0", "0", "0", " ", " ", " ", "#"],
+  ["#", " ", " ", "0", " ", " ", "0", "0", "0", "0", "0", "0", "0", " ", " ", "#"],
+  ["#", " ", " ", "0", "S", " ", "0", "0", " ", " ", " ", "0", "0", " ", " ", "#"],
+  ["#", " ", " ", " ", " ", "0", "0", "0", "0", "0", "0", "0", "0", " ", " ", "#"],
   ["#", " ", " ", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", " ", "0", "0", "0", " ", " ", "0", " ", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", " ", " ", "0", "0", "0", "0", "0", " ", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", " ", " ", "0", " ", " ", "0", "0", " ", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", " ", "0", "0", " ", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+  ["#", " ", " ", "0", " ", "0", "0", "0", " ", " ", "0", "0", "0", " ", " ", "#"],
+  ["#", " ", " ", "0", " ", " ", "0", "0", "0", "0", "0", "0", "0", " ", " ", "#"],
+  ["#", " ", " ", "0", " ", " ", "0", "0", "0", " ", "0", "0", "0", " ", " ", "#"],
+  ["#", " ", " ", "0", "0", "0", "0", "0", "0", " ", "0", "0", "0", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
   ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
@@ -165,6 +167,7 @@ map.forEach((row, i) => {
             },
             image: wall,
             passable: false,
+            start: false,
           })
         );
         break;
@@ -177,6 +180,20 @@ map.forEach((row, i) => {
             },
             image: ground,
             passable: true,
+            start: false,
+          })
+        );
+        break;
+      case "S":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+              y: canvas.height - Boundary.height * (16 + 1) + Boundary.height * (i + 1) - yOffset,
+            },
+            image: ground,
+            passable: true,
+            start: true,
           })
         );
         break;
@@ -189,6 +206,7 @@ map.forEach((row, i) => {
             },
             image: dark,
             passable: false,
+            start: false,
           })
         );
         break;
@@ -203,7 +221,7 @@ startPos = {
 
 for (let i = 0; i < boundaries.length; i++) {
   const boundary = boundaries[i];
-  if (boundary.image === ground) {
+  if (boundary.start === true) {
     startPos = boundary.position;
     break;
   }
@@ -270,7 +288,7 @@ if (tutClear === false) {
     c.font = "60px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Get under 30", innerWidth / 2, 44 * vh);
+    c.fillText("Get under " + maxMoves, innerWidth / 2, 44 * vh);
 
     c.font = "60px Times white";
     c.fillStyle = "white";
@@ -319,7 +337,7 @@ if (tutClear === false) {
     c.font = "100px Times white";
     c.fillStyle = "white";
     c.textAlign = "center";
-    c.fillText("Get under 30", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 34 * vh);
+    c.fillText("Get under " + maxMoves, innerWidth / 2, (innerHeight / 2 - wh * 50) / 2 + 34 * vh);
 
     c.font = "100px Times white";
     c.fillStyle = "white";
@@ -360,7 +378,7 @@ function animate() {
       c.fillStyle = "white";
       c.textAlign = "right";
       c.fillText(
-        "Swipes - " + moves + "/30",
+        "Swipes - " + moves + "/" + maxMoves,
         canvas.width / 2 - (mapSize / 2) * squareSize + squareSize * 16,
         innerHeight - squareSize * mapSize - 2 * vh
       );
@@ -372,7 +390,11 @@ function animate() {
       c.font = "100px Times white";
       c.fillStyle = "white";
       c.textAlign = "center";
-      c.fillText(moves + "/30", innerWidth / 2 - innerWidth / 4, innerHeight - (innerHeight / 2 - wh * 50) / 2);
+      c.fillText(
+        moves + "/" + maxMoves,
+        innerWidth / 2 - innerWidth / 4,
+        innerHeight - (innerHeight / 2 - wh * 50) / 2
+      );
 
       paintBorder = true;
     }
@@ -448,7 +470,7 @@ function animate() {
         winCon -= 1;
       }
 
-      if (winCon === 0 && moves <= 30) {
+      if (winCon === 0 && moves <= maxMoves) {
         if (innerWidth > innerHeight) {
           c.font = "120px Times White";
 
@@ -798,18 +820,19 @@ document.addEventListener(
         c.font = "100px Times white";
         c.fillStyle = "white";
         c.textAlign = "center";
-        c.fillText("Day - 1", innerWidth / 2 + innerWidth / 4, innerHeight - (innerHeight / 2 - wh * 50) / 2);
+        c.fillText("Day - " + day, innerWidth / 2 + innerWidth / 4, innerHeight - (innerHeight / 2 - wh * 50) / 2);
       }
     }
 
     if (c.isPointInPath(path, XY.x, XY.y)) {
-      if (moves <= 30) {
+      if (moves <= maxMoves) {
         var copyText =
           "       M.A.T.S. \n    Day-" +
           day +
           ": " +
           moves +
-          "/30" +
+          "/" +
+          maxMoves +
           "\n\n" +
           "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️";
       } else {
@@ -818,7 +841,8 @@ document.addEventListener(
           day +
           ": " +
           moves +
-          "/30" +
+          "/" +
+          maxMoves +
           "\n\n" +
           "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️";
       }
