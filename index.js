@@ -504,8 +504,10 @@ if (getCookie("win") === "true") {
   document.getElementById("moveP").innerHTML =
     "You made it <br /> in " + parseInt(getCookie("moves")) + " moves";
 
-  document.getElementById("copy").style.backgroundColor = "red";
-  document.getElementById("resultsH").style.color = "red";
+  if (parseInt(getCookie("moves")) > maxMoves) {
+    document.getElementById("copy").style.backgroundColor = "red";
+    document.getElementById("resultsH").style.color = "red";
+  }
 
   boundaries.forEach((boundary) => {
     if (boundary.image === ground) {
@@ -517,71 +519,7 @@ if (getCookie("win") === "true") {
     let count = boundaries.forEach((boundary) => {
       boundary.draw();
     });
-
-    player.update();
   }, 50);
-
-  /* c.clearRect(
-    player.position.x - squareSize / 2,
-    player.position.y - squareSize / 2,
-    squareSize,
-    squareSize
-  );
-
-  if (innerWidth > innerHeight) {
-    c.clearRect(
-      innerWidth / 2 - 60,
-      innerHeight - squareSize * mapSize - 2 * vh - 60,
-      1000,
-      60
-    );
-  } else { */
-  /* c.textBaseline = "middle";
-
-    c.clearRect(
-      0,
-      innerHeight - (innerHeight / 2 - wh * 50) / 2 - 100,
-      innerWidth / 2,
-      200
-    );
-
-    c.font = "100px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText(
-      moves + "/" + maxMoves,
-      innerWidth / 2 - innerWidth / 4,
-      innerHeight - (innerHeight / 2 - wh * 50) / 2
-    ); */
-
-  /*     paintBorder = true;
-  } */
-
-  if (innerWidth > innerHeight) {
-  } else {
-    /* c.textBaseline = "middle";
-
-    c.font = "160px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText("M.A.T.S", innerWidth / 2, (innerHeight / 2 - wh * 50) / 2);
-
-    c.textBaseline = "middle";
-
-    c.font = "100px Times white";
-    c.fillStyle = "white";
-    c.textAlign = "center";
-    c.fillText(
-      "Day - " + day,
-      innerWidth / 2 + innerWidth / 4,
-      innerHeight - (innerHeight / 2 - wh * 50) / 2
-   ); */
-  }
-
-  console.log(getCookie("moves"));
-
-  //animate();
-  //animateWin();
 
   if (parseInt(getCookie("moves")) > maxMoves) {
     document.getElementById("winP").innerHTML = "You are <br/> not M.A.T.S";
