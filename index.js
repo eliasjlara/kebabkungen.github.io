@@ -484,6 +484,11 @@ function animate() {
 
   document.getElementById("moveP").innerHTML =
     "You made it <br /> in " + moves + " moves";
+
+  if (parseInt(getCookie("moves")) > maxMoves) {
+    document.getElementById("winP").innerHTML = "You are <br/> not M.A.T.S";
+    document.getElementById("copy").style.backgroundColor = "red";
+  }
 }
 
 if (innerWidth > innerHeight) {
@@ -497,6 +502,8 @@ if (innerWidth > innerHeight) {
 if (getCookie("win") === "true") {
   document.getElementById("moveP").innerHTML =
     "You made it <br /> in " + parseInt(getCookie("moves")) + " moves";
+
+  document.getElementById("copy").style.backgroundColor = "red";
 
   boundaries.forEach((boundary) => {
     if (boundary.image === ground) {
@@ -573,6 +580,10 @@ if (getCookie("win") === "true") {
 
   //animate();
   //animateWin();
+
+  if (parseInt(getCookie("moves")) > maxMoves) {
+    document.getElementById("winP").innerHTML = "You are <br/> not M.A.T.S";
+  }
 
   resultMenu.style.display = "flex";
 } else {
