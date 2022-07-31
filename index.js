@@ -488,6 +488,7 @@ function animate() {
   if (parseInt(getCookie("moves")) > maxMoves) {
     document.getElementById("winP").innerHTML = "You are <br/> not M.A.T.S";
     document.getElementById("copy").style.backgroundColor = "red";
+    document.getElementById("resultsH").style.color = "red";
   }
 }
 
@@ -504,6 +505,7 @@ if (getCookie("win") === "true") {
     "You made it <br /> in " + parseInt(getCookie("moves")) + " moves";
 
   document.getElementById("copy").style.backgroundColor = "red";
+  document.getElementById("resultsH").style.color = "red";
 
   boundaries.forEach((boundary) => {
     if (boundary.image === ground) {
