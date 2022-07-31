@@ -723,7 +723,7 @@ document.getElementById("copy").onclick = function () {
       "Day-" +
       day +
       ": " +
-      moves +
+      getCookie("moves") +
       "/" +
       maxMoves +
       "\n\n" +
@@ -736,7 +736,7 @@ document.getElementById("copy").onclick = function () {
       "Day-" +
       day +
       ": " +
-      moves +
+      getCookie("moves") +
       "/" +
       maxMoves +
       "\n\n" +
