@@ -729,7 +729,7 @@ document.getElementById("copy").onclick = function () {
       "\n\n" +
       "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️" +
       "\n\n" +
-      "https://kebabkungen.github.io.";
+      "https://kebabkungen.github.io";
   } else {
     var copyText =
       "M.A.T.S.\n" +
@@ -742,7 +742,7 @@ document.getElementById("copy").onclick = function () {
       "\n\n" +
       "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️" +
       "\n\n" +
-      "https://kebabkungen.github.io.";
+      "https://kebabkungen.github.io";
   }
 
   navigator.clipboard.writeText(copyText);
