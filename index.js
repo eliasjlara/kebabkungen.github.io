@@ -367,6 +367,9 @@ function between(x, min, max) {
 var shareText = "Copy results";
 paintBorder = false;
 
+var moving = false;
+var moveCount = false;
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -409,56 +412,31 @@ function animate() {
         paintBorder = true;
       }
 
-      if (keys.w.pressed && lastKey === "w") {
-        for (let i = 0; i < boundaries.length; i++) {
-          const boundary = boundaries[i];
-          if (
-            circleCollidesWithRectangle({
-              circle: {
-                ...player,
-                velocity: {
-                  x: 0,
-                  y: -speed,
-                },
-              },
-              rectangle: boundary,
-            })
-          ) {
-            player.velocity.y = 0;
-            break;
-          } else {
-            player.velocity.y = -speed;
-          }
+      if (moving === false) {
+        if (keys.w.pressed && lastKey === "w") {
+          player.velocity.y = -speed;
+          moving = true;
+        } else if (keys.a.pressed && lastKey === "a") {
+          player.velocity.x = -speed;
+          moving = true;
+        } else if (keys.s.pressed && lastKey === "s") {
+          player.velocity.y = +speed;
+          moving = true;
+        } else if (keys.d.pressed && lastKey === "d") {
+          player.velocity.x = +speed;
+          moving = true;
         }
-      } else if (keys.a.pressed && lastKey === "a") {
-        player.velocity.x = -speed;
-      } else if (keys.s.pressed && lastKey === "s") {
-        for (let i = 0; i < boundaries.length; i++) {
-          const boundary = boundaries[i];
-          if (
-            circleCollidesWithRectangle({
-              circle: {
-                ...player,
-                velocity: {
-                  x: 0,
-                  y: speed,
-                },
-              },
-              rectangle: boundary,
-            })
-          ) {
-            player.velocity.y = 0;
-            break;
-          } else {
-            player.velocity.y = speed;
-          }
+        moveCount = true;
+      } else {
+        if (moveCount === true) {
+          moves++;
+          moveCount = false;
         }
-      } else if (keys.d.pressed && lastKey === "d") {
-        player.velocity.x = +speed;
       }
 
       let count = boundaries.forEach((boundary) => {
         boundary.draw();
+
         if (
           circleCollidesWithRectangle({
             circle: player,
@@ -467,6 +445,7 @@ function animate() {
         ) {
           player.velocity.x = 0;
           player.velocity.y = 0;
+          moving = false;
         }
 
         if (
@@ -495,9 +474,6 @@ function animate() {
         setCookie("win", "true");
         resultMenu.style.display = "flex";
       }
-
-      console.log(moves);
-
       player.update();
     }
   }
@@ -583,19 +559,15 @@ window.addEventListener("keyup", ({ key }) => {
     switch (key) {
       case "w":
         keys.w.pressed = false;
-        moves += 1;
         break;
       case "a":
         keys.a.pressed = false;
-        moves += 1;
         break;
       case "s":
         keys.s.pressed = false;
-        moves += 1;
         break;
       case "d":
         keys.d.pressed = false;
-        moves += 1;
         break;
     }
   }
@@ -659,10 +631,6 @@ function handleTouchMove(evt) {
   /* reset values */
   xDown = null;
   yDown = null;
-
-  if (winCon !== 0) {
-    moves += 1;
-  }
 
   if (evt.target == canvas) {
     evt.preventDefault();
