@@ -35,7 +35,7 @@ var close = false;
 
 var yOffset = 0;
 var day = 4;
-var maxMoves = 35;
+var maxMoves = 25;
 
 document.getElementById("maxMovesP").innerHTML = "Get under " + "<u>" + maxMoves + "</u>";
 document.getElementById("dayP").innerHTML = "Day - " + day;
