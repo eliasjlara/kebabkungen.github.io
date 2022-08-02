@@ -1,400 +1,95 @@
-<body>
-  <div class="startOverlay">
-    <div>
-      <p class="p1">M.A.T.S</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="startOverlay1">
+      <div><p class="p1">M.A.T.S</p></div>
+
+      <div><p id="dayP" , class="p2"></p></div>
+
+      <div><p id="moveTutDiv" , class="p3">Use w, a, s, d to move</p></div>
+
+      <div><p id="maxMovesP">Get under ...</p></div>
+
+      <div><p id="clickTutDiv">Click to continue</p></div>
+
+      <div class="img-container"><img src="img/tut3.png" /></div>
     </div>
 
-    <div>
-      <p id="dayP" , class="p2"></p>
+    <div class="startOverlay2">
+      <div><p class="p1">M.A.T.S</p></div>
+
+      <div><p id="dayP2" , class="p2"></p></div>
+
+      <div><p id="bombTutDiv" , class="p3">Click 'b' to use bomb</p></div>
+
+      <div><p id="aimTutDiv">Use w, a, s, d to aim</p></div>
+
+      <div><p id="clickTutDiv2">Click to begin</p></div>
+
+      <div class="img-container"><img src="img/tut3b.png" /></div>
     </div>
 
-    <div>
-      <p class="p3-pc">Use w, a, s, d to move</p>
-    </div>
-    <div>
-      <p class="p3-mobile">Swipe to move</p>
-    </div>
+    <div class="gameOverlay">
+      <div class="mats"><p>M.A.T.S</p></div>
 
-    <div>
-      <p id="maxMovesP" , class="p4">Get under ...</p>
-    </div>
-
-    <div>
-      <p class="p5-pc">Click to begin</p>
-    </div>
-    <div>
-      <p class="p5-mobile">Tap to begin</p>
-    </div>
-  </div>
-
-  <div class="gameOverlay">
-    <div class="mats"><p>M.A.T.S</p></div>
-
-    <div class="pcGame">
-      <div style="display: flex; justify-content: left; align-items: left; width: 50vw">
-        <p id="swipesDiv">Moves 0/35</p>
-      </div>
-
-      <div style="display: flex; justify-content: right; align-items: right; width: 50vw">
-        <p id="dayDiv"></p>
-      </div>
-    </div>
-  </div>
-
-  <div
-    style="
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    "
-  >
-    <div class="resultMenu" , style="position: absolute">
-      <div class="box">
-        <div class="close"></div>
-
-        <div><h1 id="resultsH">Results</h1></div>
-
-        <div style="text-align: center">
-          <p id="moveP">
-            You made it <br />
-            in 0 moves
-          </p>
+      <div class="pcGame">
+        <div style="display: flex; justify-content: left; align-items: left; width: 50vw">
+          <p id="swipesDiv">Moves 0/35</p>
         </div>
 
-        <!-- <div><p>in 0 moves</p></div> -->
-
-        <div style="text-align: center">
-          <p id="winP">
-            You truly <br />
-            are M.A.T.S
-          </p>
+        <div
+          style="display: flex; justify-content: right; align-items: right; width: 50vw"
+        >
+          <p id="dayDiv"></p>
         </div>
+      </div>
+    </div>
 
-        <!-- <div><p>are M.A.T.S</p></div> -->
+    <div
+      style="
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div class="resultMenu" , style="position: absolute">
+        <div class="box">
+          <div class="close"></div>
 
-        <div id="copy" , class="shareButton">
-          <div>
-            <p id="copyP">Copy results</p>
+          <div><h1 id="resultsH">Results</h1></div>
+
+          <div style="text-align: center">
+            <p id="moveP">
+              You made it <br />
+              in 0 moves
+            </p>
+          </div>
+
+          <div style="text-align: center">
+            <p id="winP">
+              You truly <br />
+              are M.A.T.S
+            </p>
+          </div>
+
+          <div id="copy" , class="shareButton">
+            <div>
+              <p id="copyP">Copy results</p>
+            </div>
           </div>
         </div>
       </div>
+
+      <canvas> </canvas>
     </div>
 
-    <canvas> </canvas>
-  </div>
-
-  <script src="animateWin.js"></script>
-  <script src="index.js"></script>
-</body>
-
-<style>
-  body {
-    background-color: #453232;
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body {
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  h1 {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 100px;
-    vertical-align: bottom;
-    color: white;
-    border-style: none;
-    margin: 0;
-  }
-
-  .startOverlay {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .startOverlay .p1 {
-    font-size: 80px;
-
-    padding-top: 4vh;
-  }
-
-  .startOverlay .p2 {
-    font-size: 60px;
-    padding-top: 0;
-  }
-  .startOverlay .p3-pc {
-    font-size: 60px;
-    padding-top: 3vh;
-  }
-
-  .startOverlay .p3-mobile {
-    display: none;
-  }
-  .startOverlay .p4 {
-    font-size: 60px;
-
-    padding-top: 1vh;
-  }
-  .startOverlay .p5-pc {
-    font-size: 60px;
-
-    padding-top: 1vh;
-  }
-  .startOverlay .p5-mobile {
-    display: none;
-  }
-  .gameOverlay {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 100vw;
-    height: 25vh;
-    border-style: none;
-  }
-
-  .gameOverlay .mats p {
-    font-size: 80px;
-  }
-
-  .pcGame {
-    display: flex;
-    width: calc(100vh - (100vh / 4));
-  }
-
-  #dayDiv p {
-    font-size: 60px;
-  }
-  #swipesDiv p {
-    font-size: 60px;
-  }
-
-  p {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 70px;
-    vertical-align: bottom;
-    color: white;
-    border-style: none;
-    margin: 0;
-    display: auto;
-  }
-
-  .box {
-    background-color: #372a2a;
-    width: 30vw;
-    height: 85vh;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    border-style: dotted;
-    justify-content: space-between;
-  }
-
-  .shareButton {
-    background-color: #46aa04;
-    width: 15vw;
-    height: 10vh;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-style: none;
-    margin-bottom: 5vh;
-  }
-
-  .shareButton p {
-    font-size: 40px;
-  }
-
-  .close {
-    background: none;
-  }
-  .close:after {
-    position: absolute;
-    top: 0;
-    bottom: 92%;
-    left: 88%;
-    right: 0;
-    content: "\d7";
-    font-size: 60px;
-    color: white;
-    text-align: right;
-    padding-right: 2vh;
-    border-style: none;
-  }
-
-  @media only screen and (max-width: 1920px) {
-    p {
-      font-size: 50px;
-    }
-    .shareButton p {
-      font-size: 30px;
-    }
-  }
-
-  @media only screen and (orientation: portrait) {
-    .startOverlay {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      width: 100vw;
-      height: 100vh;
-    }
-
-    .startOverlay .p1 {
-      font-size: 160px;
-    }
-    .startOverlay .p2 {
-      font-size: 140px;
-    }
-    .startOverlay .p3-pc {
-      display: none;
-    }
-    .startOverlay .p3-mobile {
-      display: inline-block;
-      font-size: 100px;
-      padding-top: 6vh;
-    }
-    .startOverlay .p4 {
-      font-size: 100px;
-      padding-top: 2vh;
-    }
-    .startOverlay .p5-pc {
-      display: none;
-    }
-    .startOverlay .p5-mobile {
-      display: inline-block;
-      font-size: 100px;
-      padding-top: 2vh;
-    }
-
-    .gameOverlay {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      width: 100vw;
-      height: 100%;
-      /* height: calc((90vh - 100vw)/2); */
-      border-color: red;
-      /* border-width: 0; */
-      border-style: none;
-      text-align: center;
-      justify-content: space-between;
-    }
-
-    .pcGame {
-      width: 100vw;
-      border-style: none;
-    }
-    .pcGame div {
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-      height: calc((87vh - 100vw) / 2);
-      border-style: none;
-    }
-
-    .gameOverlay .mats {
-      border-style: none;
-      color: white;
-      display: flex;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-
-      width: 100vw;
-      height: calc((90vh - 100vw) / 2);
-    }
-
-    .gameOverlay .mats p {
-      font-size: 160px;
-      border-style: none;
-    }
-
-    .box {
-      background-color: #372a2a;
-      width: 90vw;
-      height: 80vh;
-      border-radius: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    h1 {
-      font-family: "Times New Roman", Times, serif;
-      font-size: 160px;
-      vertical-align: bottom;
-      color: white;
-      border-style: none;
-      margin: 0;
-    }
-
-    p {
-      font-family: "Times New Roman", Times, serif;
-      font-size: 110px;
-      vertical-align: bottom;
-      color: white;
-      border-style: none;
-      margin: 0;
-      display: auto;
-      width: 70vw;
-    }
-
-    .shareButton {
-      background-color: #46aa04;
-      width: 50vw;
-      height: 10vh;
-      border-radius: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 7vh;
-    }
-    .shareButton p {
-      font-size: 70px;
-    }
-
-    .close {
-      background: none;
-    }
-    .close:after {
-      position: absolute;
-      top: 0;
-      bottom: 90%;
-      left: 83%;
-      right: 0;
-      content: "\d7";
-      font-size: 150px;
-      color: white;
-      text-align: right;
-      padding-right: 2vh;
-      border-style: none;
-    }
-
-    #dayDiv p {
-      font-size: 100px;
-    }
-    #swipesDiv p {
-      font-size: 100px;
-    }
-  }
-</style>
+    <script src="constants.js"></script>
+    <script src="classes.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

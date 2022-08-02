@@ -1,0 +1,358 @@
+body {
+  background-color: #453232;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+h1 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 100px;
+  vertical-align: bottom;
+  color: white;
+  border-style: none;
+  margin: 0;
+}
+
+.startOverlay1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.startOverlay1 .p1 {
+  padding-top: 4vh;
+}
+
+.startOverlay1 .p3 {
+  padding-top: 4vh;
+}
+
+.startOverlay2 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.startOverlay2 .p1 {
+  padding-top: 4vh;
+}
+
+.startOverlay2 .p3 {
+  padding-top: 4vh;
+}
+
+div.img-container {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4vh;
+}
+
+div.img-container img {
+  height: calc(100% * 0.9);
+  position: absolute;
+}
+
+.startOverlay1 .p1 {
+  font-size: 80px;
+}
+
+.startOverlay1 .p2 {
+  font-size: 60px;
+}
+.startOverlay1 .p3-pc {
+  font-size: 60px;
+}
+
+.startOverlay1 .p3-mobile {
+  display: none;
+}
+.startOverlay1 .p4 {
+  font-size: 60px;
+}
+.startOverlay1 .p5-pc {
+  font-size: 60px;
+}
+.startOverlay1 .p5-mobile {
+  display: none;
+}
+
+.startOverlay2 .p1 {
+  font-size: 80px;
+}
+
+.startOverlay2 .p2 {
+  font-size: 60px;
+}
+.startOverlay2 .p3-pc {
+  font-size: 60px;
+}
+
+.startOverlay2 .p3-mobile {
+  display: none;
+}
+.startOverlay2 .p4 {
+  font-size: 60px;
+}
+.startOverlay2 .p5-pc {
+  font-size: 60px;
+}
+.startOverlay2 .p5-mobile {
+  display: none;
+}
+
+.gameOverlay {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
+  height: 25vh;
+  border-style: none;
+}
+
+.gameOverlay .mats p {
+  font-size: 80px;
+}
+
+.pcGame {
+  display: flex;
+  width: calc(100vh - (100vh / 4));
+}
+
+#dayDiv p {
+  font-size: 60px;
+}
+#swipesDiv p {
+  font-size: 60px;
+}
+
+p {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 70px;
+  vertical-align: bottom;
+  color: white;
+  border-style: none;
+  margin: 0;
+  display: auto;
+}
+
+.box {
+  background-color: #372a2a;
+  width: 30vw;
+  height: 85vh;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  border-style: dotted;
+  justify-content: space-between;
+}
+
+.shareButton {
+  background-color: #46aa04;
+  width: 15vw;
+  height: 10vh;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-style: none;
+  margin-bottom: 5vh;
+}
+
+.shareButton p {
+  font-size: 40px;
+}
+
+.close {
+  background: none;
+}
+.close:after {
+  position: absolute;
+  top: 0;
+  bottom: 92%;
+  left: 88%;
+  right: 0;
+  content: "\d7";
+  font-size: 60px;
+  color: white;
+  text-align: right;
+  padding-right: 2vh;
+  border-style: none;
+}
+
+@media only screen and (max-width: 1920px) {
+  p {
+    font-size: 50px;
+  }
+  .shareButton p {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  .startOverlay1 {
+    text-align: center;
+  }
+
+  .startOverlay1 .p1 {
+    font-size: 160px;
+  }
+  .startOverlay1 .p2 {
+    font-size: 140px;
+  }
+
+  .startOverlay1 .p4 {
+    font-size: 100px;
+  }
+
+  .startOverlay2 {
+    text-align: center;
+  }
+
+  .startOverlay2 .p1 {
+    font-size: 160px;
+  }
+  .startOverlay2 .p2 {
+    font-size: 140px;
+  }
+
+  .startOverlay2 .p4 {
+    font-size: 100px;
+  }
+
+  .gameOverlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    height: 100%;
+    /* height: calc((90vh - 100vw)/2); */
+    border-color: red;
+    /* border-width: 0; */
+    border-style: none;
+    text-align: center;
+    justify-content: space-between;
+  }
+
+  .pcGame {
+    width: 100vw;
+    border-style: none;
+  }
+  .pcGame div {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: calc((87vh - 100vw) / 2);
+    border-style: none;
+  }
+
+  .gameOverlay .mats {
+    border-style: none;
+    color: white;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: calc((90vh - 100vw) / 2);
+  }
+
+  .gameOverlay .mats p {
+    font-size: 160px;
+    border-style: none;
+  }
+
+  .box {
+    background-color: #372a2a;
+    width: 90vw;
+    height: 80vh;
+    border-radius: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 160px;
+    vertical-align: bottom;
+    color: white;
+    border-style: none;
+    margin: 0;
+  }
+
+  p {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 110px;
+    vertical-align: bottom;
+    color: white;
+    border-style: none;
+    margin: 0;
+    display: auto;
+    width: 70vw;
+  }
+
+  .shareButton {
+    background-color: #46aa04;
+    width: 50vw;
+    height: 10vh;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 7vh;
+  }
+  .shareButton p {
+    font-size: 70px;
+  }
+
+  .close {
+    background: none;
+  }
+  .close:after {
+    position: absolute;
+    top: 0;
+    bottom: 90%;
+    left: 83%;
+    right: 0;
+    content: "\d7";
+    font-size: 150px;
+    color: white;
+    text-align: right;
+    padding-right: 2vh;
+    border-style: none;
+  }
+
+  #dayDiv p {
+    font-size: 100px;
+  }
+  #swipesDiv p {
+    font-size: 100px;
+  }
+}

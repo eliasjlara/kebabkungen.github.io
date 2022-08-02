@@ -1,41 +1,16 @@
-const canvas = document.querySelector("canvas");
-const c = canvas.getContext("2d");
-
-const cross = document.querySelector(".close");
-const resultMenu = document.querySelector(".resultMenu");
-const gameOverlay = document.querySelector(".gameOverlay");
-const startOverlay = document.querySelector(".startOverlay");
-
 gameOverlay.style.display = "none";
 
 resultMenu.style.display = "none";
 
 if (getCookie("win") === "true") {
-  startOverlay.style.display = "none";
+  startOverlay1.style.display = "none";
+  startOverlay2.style.display = "none";
   gameOverlay.style.display = "flex";
 }
 
 cross.addEventListener("click", () => {
   resultMenu.style.display = "none";
 });
-
-let vh = window.innerHeight * 0.01;
-let wh = window.innerWidth * 0.01;
-
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-var close = false;
-
-mapSize = 16;
-
-var yOffset = 0;
-var day = 4;
-var maxMoves = 35;
-
-document.getElementById("maxMovesP").innerHTML = "Get under " + "<u>" + maxMoves + "</u>";
-document.getElementById("dayP").innerHTML = "Day - " + day;
-document.getElementById("dayDiv").innerHTML = "Day - " + day;
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -81,125 +56,6 @@ if (getCookie("firstVisit") === "false") {
 
   setCookie("firstVisit" === "true");
 }
-
-if (innerWidth > innerHeight) {
-  squareSize = (innerHeight - innerHeight / 4) / mapSize;
-} else {
-  squareSize = (wh * 97.5) / 16;
-  yOffset = innerHeight / 2 - wh * 50;
-
-  innerHeight - (vh * 5 + squareSize * 16 + vh * 3);
-}
-
-class Boundary {
-  static width = squareSize;
-  static height = squareSize;
-  constructor({ position, image, passable, start }) {
-    this.position = position;
-    this.width = squareSize;
-    this.height = squareSize;
-    this.image = image;
-    this.passable = passable;
-    this.start = start;
-  }
-
-  draw() {
-    c.drawImage(
-      this.image,
-      0,
-      0,
-      this.image.width,
-      this.image.height,
-      this.position.x,
-      this.position.y,
-      squareSize,
-      squareSize
-    );
-  }
-}
-
-class Player {
-  constructor({ position, velocity, image }) {
-    this.position = position;
-    this.velocity = velocity;
-    this.image = image;
-    this.radius = 1;
-  }
-
-  draw() {
-    c.drawImage(
-      this.image,
-      0,
-      0,
-      this.image.width,
-      this.image.height,
-      this.position.x - squareSize / 2,
-      this.position.y - squareSize / 2,
-      squareSize,
-      squareSize
-    );
-  }
-
-  update() {
-    this.draw();
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
-  }
-}
-
-const ball = new Image();
-ball.src = "img/ball.png";
-
-const paintImg = new Image();
-paintImg.src = "img/paint.png";
-
-const boundaries = [];
-
-const keys = {
-  w: {
-    pressed: false,
-  },
-  a: {
-    pressed: false,
-  },
-  s: {
-    pressed: false,
-  },
-  d: {
-    pressed: false,
-  },
-};
-
-let lastKey = "";
-
-const map = [
-  ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-  ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", " ", "0", "0", "0", "0", "0", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", "S", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", " ", " ", "#"],
-  ["#", " ", "0", "0", "0", "0", " ", "0", "0", "0", "0", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", "0", " ", " ", " ", " ", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", "0", "0", "0", " ", " ", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", "0", "0", "0", " ", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", " ", "0", "0", "0", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", " ", " ", " ", "0", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", " ", " ", "0", " ", " ", " ", "0", "0", "0", " ", " ", "#"],
-  ["#", " ", " ", "0", " ", " ", "0", " ", " ", " ", "0", "0", " ", " ", " ", "#"],
-  ["#", " ", " ", "0", "0", "0", "0", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", " ", " ", " ", "0", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-  ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-];
-
-const wall = new Image();
-wall.src = "img/wall.png";
-const ground = new Image();
-ground.src = "img/ground.png";
-const dark = new Image();
-dark.src = "img/dark_wall.png";
-
-const tut = new Image();
-tut.src = "img/tut3.png";
 
 map.forEach((row, i) => {
   row.forEach((symbol, j) => {
@@ -255,6 +111,23 @@ map.forEach((row, i) => {
           })
         );
         break;
+      case "B":
+        boundaries.push(
+          new Boundary({
+            position: {
+              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+              y:
+                canvas.height -
+                Boundary.height * (16 + 1) +
+                Boundary.height * (i + 1) -
+                yOffset,
+            },
+            image: bomb,
+            passable: true,
+            start: true,
+          })
+        );
+        break;
       case "#":
         boundaries.push(
           new Boundary({
@@ -275,11 +148,6 @@ map.forEach((row, i) => {
     }
   });
 });
-
-startPos = {
-  x: 0,
-  y: 0,
-};
 
 for (let i = 0; i < boundaries.length; i++) {
   const boundary = boundaries[i];
@@ -314,12 +182,13 @@ function circleCollidesWithRectangle({ circle, rectangle }) {
   }
 }
 
-var winCon = 0;
 boundaries.forEach((boundary) => {
-  if (boundary.image === ground) {
+  if (boundary.image === ground || boundary.image === bomb) {
     winCon += 1;
   }
 });
+
+console.log(winCon);
 
 if (getCookie("win") === "true") {
   var tutClear = true;
@@ -327,58 +196,18 @@ if (getCookie("win") === "true") {
   var tutClear = false;
 }
 
-const speed = squareSize;
-var moves = 0;
-
-const path = new Path2D();
-const pathTest = new Path2D();
-
-if (tutClear === false) {
-  if (innerWidth > innerHeight) {
-    tut.onload = function () {
-      c.drawImage(
-        tut,
-        innerWidth / 2 - (innerHeight - 60 * vh) / 2,
-        innerHeight - (47 * vh) / 2 - (innerHeight - 60 * vh) / 2,
-        innerHeight - 60 * vh,
-        innerHeight - 60 * vh
-      );
-
-      c.textBaseline = "bottom";
-    };
-  } else {
-    tut.onload = function () {
-      c.drawImage(
-        tut,
-        innerWidth / 2 -
-          (innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200)) / 2,
-        (innerHeight / 2 - wh * 50) / 2 + 48 * vh + 70,
-        innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200),
-        innerHeight - ((innerHeight / 2 - wh * 50) / 2 + 45 * vh + 200)
-      );
-    };
-  }
-}
-
 function between(x, min, max) {
   return x >= min && x <= max;
 }
 
-var shareText = "Copy results";
-paintBorder = false;
+var bombing = false;
 
-var moving = false;
-var moveCount = false;
+var imgCount = 0;
+
+var isRunning = true;
 
 function animate() {
   requestAnimationFrame(animate);
-
-  if (tutClear === true) {
-    if (innerWidth > innerHeight) {
-      c.clearRect(0, 0, innerWidth, innerHeight - squareSize * mapSize);
-    } else {
-    }
-  }
 
   if (winCon !== 0) {
     if (paintBorder === true) {
@@ -412,7 +241,7 @@ function animate() {
         paintBorder = true;
       }
 
-      if (moving === false) {
+      if (moving === false && bombing === false) {
         if (keys.w.pressed && lastKey === "w") {
           player.velocity.y = -speed;
           moving = true;
@@ -434,9 +263,255 @@ function animate() {
         }
       }
 
+      if (bombing === true) {
+        boundaries.forEach((boundary) => {
+          if (
+            between(
+              player.position.y - squareSize / 2 - squareSize,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            between(
+              player.position.x - squareSize / 2,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            boundary.image === wall
+          ) {
+            boundary.image = arrowUp;
+          }
+
+          if (
+            between(
+              player.position.x - squareSize / 2 - squareSize,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            between(
+              player.position.y - squareSize / 2,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            boundary.image === wall
+          ) {
+            boundary.image = arrowLeft;
+          }
+
+          if (
+            between(
+              player.position.y - squareSize / 2 + squareSize,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            between(
+              player.position.x - squareSize / 2,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            boundary.image === wall
+          ) {
+            boundary.image = arrowDown;
+          }
+
+          if (
+            between(
+              player.position.x - squareSize / 2 + squareSize,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            between(
+              player.position.y - squareSize / 2,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            boundary.image === wall
+          ) {
+            boundary.image = arrowRight;
+          }
+        });
+        if (keys.w.pressed && lastKey === "w") {
+          boundaries.forEach((boundary) => {
+            if (
+              between(
+                player.position.y - squareSize / 2 - squareSize,
+                boundary.position.y - 2,
+                boundary.position.y + 2
+              ) &&
+              between(
+                player.position.x - squareSize / 2,
+                boundary.position.x - 2,
+                boundary.position.x + 2
+              ) &&
+              boundary.image === arrowUp
+            ) {
+              boundary.image = explosion;
+
+              setTimeout(function () {
+                boundary.image = ground;
+              }, 300);
+
+              boundary.passable = true;
+              player.image = ball;
+              bombing = false;
+              winCon++;
+            }
+          });
+        } else if (keys.a.pressed && lastKey === "a") {
+          boundaries.forEach((boundary) => {
+            if (
+              between(
+                player.position.x - squareSize / 2 - squareSize,
+                boundary.position.x - 2,
+                boundary.position.x + 2
+              ) &&
+              between(
+                player.position.y - squareSize / 2,
+                boundary.position.y - 2,
+                boundary.position.y + 2
+              ) &&
+              boundary.image === arrowLeft
+            ) {
+              boundary.image = explosion;
+
+              setTimeout(function () {
+                boundary.image = ground;
+              }, 300);
+              boundary.passable = true;
+              player.image = ball;
+              bombing = false;
+              winCon++;
+            }
+          });
+        } else if (keys.s.pressed && lastKey === "s") {
+          boundaries.forEach((boundary) => {
+            if (
+              between(
+                player.position.y - squareSize / 2 + squareSize,
+                boundary.position.y - 2,
+                boundary.position.y + 2
+              ) &&
+              between(
+                player.position.x - squareSize / 2,
+                boundary.position.x - 2,
+                boundary.position.x + 2
+              ) &&
+              boundary.image === arrowDown
+            ) {
+              boundary.image = explosion;
+
+              setTimeout(function () {
+                boundary.image = ground;
+              }, 300);
+              boundary.passable = true;
+              player.image = ball;
+              bombing = false;
+
+              winCon++;
+            }
+          });
+        } else if (keys.d.pressed && lastKey === "d") {
+          boundaries.forEach((boundary) => {
+            if (
+              between(
+                player.position.x - squareSize / 2 + squareSize,
+                boundary.position.x - 2,
+                boundary.position.x + 2
+              ) &&
+              between(
+                player.position.y - squareSize / 2,
+                boundary.position.y - 2,
+                boundary.position.y + 2
+              ) &&
+              boundary.image === arrowRight
+            ) {
+              boundary.image = explosion;
+
+              setTimeout(function () {
+                boundary.image = ground;
+              }, 300);
+              boundary.passable = true;
+              player.image = ball;
+              bombing = false;
+
+              winCon++;
+            }
+          });
+        }
+        keys.a.pressed = false;
+        keys.d.pressed = false;
+        keys.w.pressed = false;
+        keys.s.pressed = false;
+        lastKey = "";
+      } else {
+        boundaries.forEach((boundary) => {
+          if (
+            between(
+              player.position.y - squareSize / 2 - squareSize,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            between(
+              player.position.x - squareSize / 2,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            boundary.image === arrowUp
+          ) {
+            boundary.image = wall;
+          }
+
+          if (
+            between(
+              player.position.x - squareSize / 2 - squareSize,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            between(
+              player.position.y - squareSize / 2,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            boundary.image === arrowLeft
+          ) {
+            boundary.image = wall;
+          }
+
+          if (
+            between(
+              player.position.y - squareSize / 2 + squareSize,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            between(
+              player.position.x - squareSize / 2,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            boundary.image === arrowDown
+          ) {
+            boundary.image = wall;
+          }
+
+          if (
+            between(
+              player.position.x - squareSize / 2 + squareSize,
+              boundary.position.x - 2,
+              boundary.position.x + 2
+            ) &&
+            between(
+              player.position.y - squareSize / 2,
+              boundary.position.y - 2,
+              boundary.position.y + 2
+            ) &&
+            boundary.image === arrowRight
+          ) {
+            boundary.image = wall;
+          }
+        });
+      }
+
       let count = boundaries.forEach((boundary) => {
         boundary.draw();
-
         if (
           circleCollidesWithRectangle({
             circle: player,
@@ -465,6 +540,21 @@ function animate() {
           player.position.y = boundary.position.y + squareSize / 2;
           boundary.image = paintImg;
           winCon -= 1;
+        } else if (
+          between(
+            player.position.x - squareSize / 2,
+            boundary.position.x - 2,
+            boundary.position.x + 2
+          ) &&
+          between(
+            player.position.y - squareSize / 2,
+            boundary.position.y - 2,
+            boundary.position.y + 2
+          ) &&
+          boundary.image === bomb
+        ) {
+          boundary.image = ground;
+          player.image = bombBall;
         }
       });
 
@@ -550,6 +640,10 @@ window.addEventListener("keydown", ({ key }) => {
         keys.d.pressed = true;
         lastKey = "d";
         break;
+      case "b":
+        keys.b.pressed = true;
+        lastKey = "b";
+        break;
     }
   }
 });
@@ -568,6 +662,15 @@ window.addEventListener("keyup", ({ key }) => {
         break;
       case "d":
         keys.d.pressed = false;
+        break;
+      case "b":
+        if (player.image === bombBall) {
+          player.image = bombFire;
+          bombing = true;
+        } else if (player.image === bombFire) {
+          player.image = bombBall;
+          bombing = false;
+        }
         break;
     }
   }
@@ -632,19 +735,12 @@ function handleTouchMove(evt) {
   xDown = null;
   yDown = null;
 
+  if (winCon !== 0 && bombing !== true) {
+  }
+
   if (evt.target == canvas) {
     evt.preventDefault();
   }
-}
-
-function roundedRect(ctx, x, y, width, height, radius) {
-  ctx.beginPath();
-  ctx.moveTo(x, y + radius);
-  ctx.arcTo(x, y + height, x + radius, y + height, radius);
-  ctx.arcTo(x + width, y + height, x + width, y + height - radius, radius);
-  ctx.arcTo(x + width, y, x + width - radius, y, radius);
-  ctx.arcTo(x, y, x, y + radius, radius);
-  ctx.fill();
 }
 
 function getXY(canvas, event) {
@@ -700,11 +796,31 @@ document.addEventListener(
 
     if (tutClear === false) {
       c.clearRect(0, 0, innerWidth, innerHeight);
-      tutClear = true;
 
       gameOverlay.style.display = "flex";
 
-      startOverlay.style.display = "none";
+      startOverlay1.style.display = "none";
+
+      if (tut1Clear === true) {
+        startOverlay2.style.display = "none";
+        tutClear = true;
+      }
+
+      tut1Clear = true;
+    } else {
+      if (player.image === bombBall) {
+        player.image = bombFire;
+        bombing = true;
+
+        keys.a.pressed = false;
+        keys.d.pressed = false;
+        keys.w.pressed = false;
+        keys.s.pressed = false;
+        lastKey = "";
+      } else if (player.image === bombFire) {
+        player.image = bombBall;
+        bombing = false;
+      }
     }
   },
   false
