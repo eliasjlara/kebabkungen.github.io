@@ -34,7 +34,7 @@ if (innerWidth > innerHeight) {
 var close = false;
 
 var yOffset = 0;
-var day = 4;
+var day = 5;
 var maxMoves = 25;
 
 document.getElementById("maxMovesP").innerHTML = "Get under " + "<u>" + maxMoves + "</u>";
