@@ -553,7 +553,9 @@ function animate() {
           ) &&
           boundary.image === bomb
         ) {
-          boundary.image = ground;
+          boundary.image = paintImg;
+          winCon -= 1;
+
           player.image = bombBall;
         }
       });
