@@ -19,7 +19,7 @@ var tut1Clear = false;
 if (innerWidth > innerHeight) {
   squareSize = (innerHeight - innerHeight / 4) / mapSize;
 } else {
-  squareSize = (wh * 97.5) / 16;
+  squareSize = (wh * 100) / 16;
   yOffset = innerHeight / 2 - wh * 50;
 
   innerHeight - (vh * 5 + squareSize * 16 + vh * 3);
@@ -104,7 +104,6 @@ const speed = squareSize;
 var moves = 0;
 
 var shareText = "Copy results";
-paintBorder = false;
 
 var moving = false;
 var moveCount = false;
@@ -112,10 +111,8 @@ var moveCount = false;
 if (innerWidth > innerHeight) {
   squareSize = (innerHeight - innerHeight / 4) / mapSize;
 } else {
-  squareSize = (wh * 97.5) / 16;
+  squareSize = (wh * 100) / 16;
   yOffset = innerHeight / 2 - wh * 50;
-
-  innerHeight - (vh * 5 + squareSize * 16 + vh * 3);
 }
 
 const map = [

@@ -210,7 +210,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   if (winCon !== 0) {
-    if (paintBorder === true) {
+    /*     if (paintBorder === true) {
       c.clearRect(0, yOffset + 1.5 * wh, wh * 100, wh * 100);
 
       c.beginPath();
@@ -220,7 +220,7 @@ function animate() {
       c.stroke();
 
       wh * 0.5, innerHeight - (squareSize * 16 + 2 * wh), wh * 99, wh * 99;
-    }
+    } */
 
     if (tutClear === true) {
       c.clearRect(
@@ -230,7 +230,7 @@ function animate() {
         squareSize
       );
 
-      if (innerWidth > innerHeight) {
+      /*       if (innerWidth > innerHeight) {
         c.clearRect(
           innerWidth / 2 - 60,
           innerHeight - squareSize * mapSize - 2 * vh - 60,
@@ -239,7 +239,7 @@ function animate() {
         );
       } else {
         paintBorder = true;
-      }
+      } */
 
       if (moving === false && bombing === false) {
         if (keys.w.pressed && lastKey === "w") {
