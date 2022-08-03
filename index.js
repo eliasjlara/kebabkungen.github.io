@@ -124,7 +124,7 @@ map.forEach((row, i) => {
             },
             image: bomb,
             passable: true,
-            start: true,
+            start: false,
           })
         );
         break;
@@ -257,13 +257,16 @@ function animate() {
         }
         moveCount = true;
       } else {
-        if (moveCount === true) {
-          moves++;
-          moveCount = false;
+        if (bombing === false) {
+          if (moveCount === true) {
+            moves++;
+            moveCount = false;
+          }
         }
       }
 
       if (bombing === true) {
+        moveCount = false;
         boundaries.forEach((boundary) => {
           if (
             between(
@@ -759,7 +762,7 @@ function getXY(canvas, event) {
 document.getElementById("copy").onclick = function () {
   document.getElementById("copyP").innerHTML = "Copied!";
 
-  if (moves <= maxMoves) {
+  if (getCookie("moves") <= maxMoves) {
     var copyText =
       "M.A.T.S.\n" +
       "Day-" +
