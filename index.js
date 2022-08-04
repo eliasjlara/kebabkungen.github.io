@@ -606,12 +606,7 @@ function animate() {
 
       player.update();
 
-      console.log(prevPos);
-      console.log(player.position);
-
-      if (prevPos.x === player.position.x && prevPos.y === player.position.y) {
-        console.log("NU");
-      } else {
+      if (!(prevPos.x === player.position.x && prevPos.y === player.position.y)) {
         var arrowOffset = { x: 0, y: 0 };
         if (lastKey === "w") {
           arrowOffset.y = squareSize / 2;
@@ -633,8 +628,6 @@ function animate() {
           player.position.y + arrowOffset.y
         );
       }
-
-      c.stroke();
     }
   }
   if (innerWidth > innerHeight) {
