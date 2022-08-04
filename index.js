@@ -206,6 +206,14 @@ var imgCount = 0;
 
 var isRunning = true;
 
+c.strokeStyle = "white";
+c.lineWidth = 5;
+
+c.beginPath();
+c.moveTo(player.position.x, player.position.y);
+
+paintOffset = 0;
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -560,6 +568,7 @@ function animate() {
           winCon -= 1;
 
           player.image = bombBall;
+        } else {
         }
       });
 
@@ -568,7 +577,11 @@ function animate() {
       if (winCon === 0) {
         setCookie("win", "true");
         resultMenu.style.display = "flex";
+        c.stroke();
       }
+
+      c.lineTo(player.position.x, player.position.y);
+
       player.update();
     }
   }
