@@ -207,10 +207,30 @@ var imgCount = 0;
 var isRunning = true;
 
 c.strokeStyle = "white";
-c.lineWidth = 5;
+c.lineWidth = 3;
 
 c.beginPath();
 c.moveTo(player.position.x, player.position.y);
+
+function canvas_arrow(context, fromx, fromy, tox, toy) {
+  var headlen = 10; // length of head in pixels
+  var dx = tox - fromx;
+  var dy = toy - fromy;
+  var angle = Math.atan2(dy, dx);
+  context.moveTo(fromx, fromy);
+  context.lineTo(tox, toy);
+  context.moveTo(tox, toy);
+
+  context.lineTo(
+    tox - headlen * Math.cos(angle - Math.PI / 6),
+    toy - headlen * Math.sin(angle - Math.PI / 6)
+  );
+  context.moveTo(tox, toy);
+  context.lineTo(
+    tox - headlen * Math.cos(angle + Math.PI / 6),
+    toy - headlen * Math.sin(angle + Math.PI / 6)
+  );
+}
 
 paintOffset = 0;
 
@@ -452,7 +472,7 @@ function animate() {
         keys.d.pressed = false;
         keys.w.pressed = false;
         keys.s.pressed = false;
-        lastKey = "";
+        //lastKey = "";
       } else {
         boundaries.forEach((boundary) => {
           if (
@@ -580,9 +600,41 @@ function animate() {
         c.stroke();
       }
 
-      c.lineTo(player.position.x, player.position.y);
+      var prevPos = { x: 0, y: 0 };
+      prevPos.x = player.position.x;
+      prevPos.y = player.position.y;
 
       player.update();
+
+      console.log(prevPos);
+      console.log(player.position);
+
+      if (prevPos.x === player.position.x && prevPos.y === player.position.y) {
+        console.log("NU");
+      } else {
+        var arrowOffset = { x: 0, y: 0 };
+        if (lastKey === "w") {
+          arrowOffset.y = squareSize / 2;
+        }
+        if (lastKey === "a") {
+          arrowOffset.x = squareSize / 2;
+        }
+        if (lastKey === "s") {
+          arrowOffset.y = -squareSize / 2;
+        }
+        if (lastKey === "d") {
+          arrowOffset.x = -squareSize / 2;
+        }
+        canvas_arrow(
+          c,
+          prevPos.x,
+          prevPos.y,
+          player.position.x + arrowOffset.x,
+          player.position.y + arrowOffset.y
+        );
+      }
+
+      c.stroke();
     }
   }
   if (innerWidth > innerHeight) {
