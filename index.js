@@ -12,6 +12,10 @@ cross.addEventListener("click", () => {
   resultMenu.style.display = "none";
 });
 
+prevArr = [];
+posArr = [];
+posOffsetArr = [];
+
 function getCookie(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -188,8 +192,6 @@ boundaries.forEach((boundary) => {
   }
 });
 
-console.log(winCon);
-
 if (getCookie("win") === "true") {
   var tutClear = true;
 } else {
@@ -205,6 +207,8 @@ var bombing = false;
 var imgCount = 0;
 
 var isRunning = true;
+
+var mapArr = [];
 
 c.strokeStyle = "white";
 c.lineWidth = 3;
@@ -597,7 +601,48 @@ function animate() {
       if (winCon === 0) {
         setCookie("win", "true");
         resultMenu.style.display = "flex";
+
+        var prevArrCookie = prevArr.join("|");
+        var posArrCookie = posArr.join("|");
+        var posOffsetArrCookie = posOffsetArr.join("|");
+
+        /* setCookie("prevArrCookie", prevArrCookie);
+        prevArrCookie = getCookie("prevArrCookie").split("|");
+ */
+        setCookie("prevArrCookie", prevArrCookie);
+        setCookie("posArrCookie", posArrCookie);
+        setCookie("posOffsetArrCookie", posOffsetArrCookie);
+
+        prevArrCookie = getCookie("prevArrCookie").split("|");
+        posArrCookie = getCookie("posArrCookie").split("|");
+        posOffsetArrCookie = getCookie("posOffsetArrCookie").split("|");
+
+        for (let i = 0; i < prevArrCookie.length; i += 2) {
+          canvas_arrow(
+            c,
+            parseFloat(prevArrCookie[i]),
+            parseFloat(prevArrCookie[i + 1]),
+            parseFloat(posArrCookie[i]) + parseFloat(posOffsetArrCookie[i]),
+            parseFloat(posArrCookie[i + 1]) + parseFloat(posOffsetArrCookie[i + 1])
+          );
+        }
         c.stroke();
+
+        boundaries.forEach((boundary) => {
+          if (boundary.image === paintImg) {
+            mapArr.push("0");
+            console.log("HÄR VA EN NOLLA");
+          }
+          if (boundary.image === dark) {
+            mapArr.push("#");
+          }
+          if (boundary.image === wall) {
+            mapArr.push(" ");
+          }
+        });
+
+        var mapArrCookie = mapArr.join("|");
+        setCookie("mapArrCookie", mapArrCookie);
       }
 
       var prevPos = { x: 0, y: 0 };
@@ -605,6 +650,10 @@ function animate() {
       prevPos.y = player.position.y;
 
       player.update();
+
+      var newArr = { x: 0, y: 0 };
+      newArr.x = player.position.x;
+      newArr.y = player.position.y;
 
       if (!(prevPos.x === player.position.x && prevPos.y === player.position.y)) {
         var arrowOffset = { x: 0, y: 0 };
@@ -620,13 +669,20 @@ function animate() {
         if (lastKey === "d") {
           arrowOffset.x = -squareSize / 2;
         }
-        canvas_arrow(
+
+        prevArr.push(prevPos.x);
+        prevArr.push(prevPos.y);
+        posArr.push(newArr.x);
+        posArr.push(newArr.y);
+        posOffsetArr.push(arrowOffset.x);
+        posOffsetArr.push(arrowOffset.y);
+        /* canvas_arrow(
           c,
           prevPos.x,
           prevPos.y,
           player.position.x + arrowOffset.x,
           player.position.y + arrowOffset.y
-        );
+        ); */
       }
     }
   }
@@ -663,6 +719,104 @@ if (getCookie("win") === "true") {
     document.getElementById("resultsH").style.color = "red";
   }
 
+  var mapArrCookie = getCookie("mapArrCookie").split("|");
+
+  mapArrCookie.forEach((e) => {
+    console.log(e);
+  });
+
+  mapArrCookie.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+      switch (symbol) {
+        case " ":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: wall,
+              passable: false,
+              start: false,
+            })
+          );
+          break;
+        case "0":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: paintImg,
+              passable: true,
+              start: false,
+            })
+          );
+          break;
+        case "S":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: ground,
+              passable: true,
+              start: true,
+            })
+          );
+          break;
+        case "B":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: bomb,
+              passable: true,
+              start: false,
+            })
+          );
+          break;
+        case "#":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: dark,
+              passable: false,
+              start: false,
+            })
+          );
+          break;
+      }
+    });
+  });
+
   boundaries.forEach((boundary) => {
     if (boundary.image === ground) {
       boundary.image = paintImg;
@@ -679,7 +833,25 @@ if (getCookie("win") === "true") {
     document.getElementById("winP").innerHTML = "You are <br/> not M.A.T.S";
   }
 
+  var prevArrCookie = getCookie("prevArrCookie").split("|");
+  var posArrCookie = getCookie("posArrCookie").split("|");
+  var posOffsetArrCookie = getCookie("posOffsetArrCookie").split("|");
+
+  for (let i = 0; i < prevArrCookie.length; i += 2) {
+    canvas_arrow(
+      c,
+      parseFloat(prevArrCookie[i]),
+      parseFloat(prevArrCookie[i + 1]),
+      parseFloat(posArrCookie[i]) + parseFloat(posOffsetArrCookie[i]),
+      parseFloat(posArrCookie[i + 1]) + parseFloat(posOffsetArrCookie[i + 1])
+    );
+  }
+
   resultMenu.style.display = "flex";
+
+  setTimeout(() => {
+    c.stroke();
+  }, 50);
 } else {
   animate();
 }
