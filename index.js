@@ -177,6 +177,7 @@ function resetMap() {
 }
 
 resetMap();
+setCookie("resets", trys);
 
 const player = new Player({
   position: {
@@ -1023,8 +1024,8 @@ document.getElementById("copy").onclick = function () {
       getCookie("moves") +
       "/" +
       maxMoves +
-      "\n" +
-      "Restarts-" +
+      " " +
+      "↻=" +
       getCookie("restarts") +
       "\n\n" +
       "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️" +
@@ -1039,8 +1040,8 @@ document.getElementById("copy").onclick = function () {
       getCookie("moves") +
       "/" +
       maxMoves +
-      "\n" +
-      "Restarts-" +
+      " " +
+      "↻=" +
       getCookie("restarts") +
       "\n\n" +
       "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️" +
