@@ -1026,7 +1026,7 @@ document.getElementById("copy").onclick = function () {
       maxMoves +
       " " +
       "↻=" +
-      getCookie("restarts") +
+      getCookie("resets") +
       "\n\n" +
       "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️" +
       "\n\n" +
@@ -1042,7 +1042,7 @@ document.getElementById("copy").onclick = function () {
       maxMoves +
       " " +
       "↻=" +
-      getCookie("restarts") +
+      getCookie("resets") +
       "\n\n" +
       "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️" +
       "\n\n" +
