@@ -132,6 +132,25 @@ div.img-container img {
   font-size: 80px;
 }
 
+.reload {
+  position: absolute;
+
+  width: calc(100vh - (100vh / 4));
+  top: -0.1vh;
+  justify-content: right;
+  align-items: right;
+  display: flex;
+}
+
+.reload p {
+  cursor: pointer;
+
+  font-family: Lucida Sans Unicode;
+  font-size: 100px;
+  color: white;
+  width: auto;
+}
+
 .pcGame {
   display: flex;
   width: calc(100vh - (100vh / 4));
@@ -265,8 +284,32 @@ p {
     text-align: center;
     justify-content: center;
     align-items: center;
+    height: calc((89vh - 100vw) / 2);
+  }
+  .pcGame div:first-child {
+    box-sizing: border-box;
+
+    border-style: solid;
+    color: white;
+    border-radius: 10px;
+  }
+
+  .reload {
+    position: absolute;
+
+    top: 80%;
+    left: 0;
     height: calc((87vh - 100vw) / 2);
-    border-style: none;
+    width: 50vw;
+
+    display: flex;
+    justify-content: right;
+    align-items: center;
+  }
+
+  .reload p {
+    width: 50vw;
+    height: calc((87vh - 100vw) / 2);
   }
 
   .gameOverlay .mats {

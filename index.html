@@ -35,16 +35,23 @@
 
     <div class="gameOverlay">
       <div class="mats"><p>M.A.T.S</p></div>
-
       <div class="pcGame">
-        <div style="display: flex; justify-content: left; align-items: left; width: 50vw">
-          <p id="swipesDiv">Moves 0/35</p>
+        <div
+          style="
+            display: flex;
+            justify-content: left;
+            align-items: left;
+            width: 50vw;
+            left: 5px;
+          "
+        >
+          <p id="restartCountDiv"></p>
         </div>
 
         <div
           style="display: flex; justify-content: right; align-items: right; width: 50vw"
         >
-          <p id="dayDiv"></p>
+          <p id="swipesDiv">Moves 0/35</p>
         </div>
       </div>
     </div>
@@ -66,7 +73,8 @@
           <div style="text-align: center">
             <p id="moveP">
               You made it <br />
-              in 0 moves
+              in 0 moves <br />
+              with 0 restarts
             </p>
           </div>
 
@@ -86,6 +94,7 @@
       </div>
 
       <canvas> </canvas>
+      <div class="reload" , id="reloadDiv"><p id="restart">&#x21bb;</p></div>
     </div>
 
     <script src="constants.js"></script>

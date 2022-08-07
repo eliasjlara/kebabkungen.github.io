@@ -8,8 +8,13 @@ if (getCookie("win") === "true") {
   gameOverlay.style.display = "flex";
 }
 
+if (innerWidth < innerHeight) {
+  document.getElementById("restart").innerHTML = "";
+}
+
 cross.addEventListener("click", () => {
   resultMenu.style.display = "none";
+  document.getElementById("reloadDiv").style.display = "";
 });
 
 prevArr = [];
@@ -61,105 +66,117 @@ if (getCookie("firstVisit") === "false") {
   setCookie("firstVisit" === "true");
 }
 
-map.forEach((row, i) => {
-  row.forEach((symbol, j) => {
-    switch (symbol) {
-      case " ":
-        boundaries.push(
-          new Boundary({
-            position: {
-              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
-              y:
-                canvas.height -
-                Boundary.height * (16 + 1) +
-                Boundary.height * (i + 1) -
-                yOffset,
-            },
-            image: wall,
-            passable: false,
-            start: false,
-          })
-        );
-        break;
-      case "0":
-        boundaries.push(
-          new Boundary({
-            position: {
-              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
-              y:
-                canvas.height -
-                Boundary.height * (16 + 1) +
-                Boundary.height * (i + 1) -
-                yOffset,
-            },
-            image: ground,
-            passable: true,
-            start: false,
-          })
-        );
-        break;
-      case "S":
-        boundaries.push(
-          new Boundary({
-            position: {
-              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
-              y:
-                canvas.height -
-                Boundary.height * (16 + 1) +
-                Boundary.height * (i + 1) -
-                yOffset,
-            },
-            image: ground,
-            passable: true,
-            start: true,
-          })
-        );
-        break;
-      case "B":
-        boundaries.push(
-          new Boundary({
-            position: {
-              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
-              y:
-                canvas.height -
-                Boundary.height * (16 + 1) +
-                Boundary.height * (i + 1) -
-                yOffset,
-            },
-            image: bomb,
-            passable: true,
-            start: false,
-          })
-        );
-        break;
-      case "#":
-        boundaries.push(
-          new Boundary({
-            position: {
-              x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
-              y:
-                canvas.height -
-                Boundary.height * (16 + 1) +
-                Boundary.height * (i + 1) -
-                yOffset,
-            },
-            image: dark,
-            passable: false,
-            start: false,
-          })
-        );
-        break;
+function resetMap() {
+  map.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+      switch (symbol) {
+        case " ":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: wall,
+              passable: false,
+              start: false,
+            })
+          );
+          break;
+        case "0":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: ground,
+              passable: true,
+              start: false,
+            })
+          );
+          break;
+        case "S":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: ground,
+              passable: true,
+              start: true,
+            })
+          );
+          break;
+        case "B":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: bomb,
+              passable: true,
+              start: false,
+            })
+          );
+          break;
+        case "#":
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: canvas.width / 2 - (mapSize / 2) * squareSize + Boundary.width * j,
+                y:
+                  canvas.height -
+                  Boundary.height * (16 + 1) +
+                  Boundary.height * (i + 1) -
+                  yOffset,
+              },
+              image: dark,
+              passable: false,
+              start: false,
+            })
+          );
+          break;
+      }
+    });
+  });
+
+  winCon = 0;
+
+  boundaries.forEach((boundary) => {
+    if (boundary.image === ground || boundary.image === bomb) {
+      winCon += 1;
     }
   });
-});
 
-for (let i = 0; i < boundaries.length; i++) {
-  const boundary = boundaries[i];
-  if (boundary.start === true) {
-    startPos = boundary.position;
-    break;
+  for (let i = 0; i < boundaries.length; i++) {
+    const boundary = boundaries[i];
+    if (boundary.start === true) {
+      startPos = boundary.position;
+      break;
+    }
   }
 }
+
+resetMap();
 
 const player = new Player({
   position: {
@@ -185,12 +202,6 @@ function circleCollidesWithRectangle({ circle, rectangle }) {
     );
   }
 }
-
-boundaries.forEach((boundary) => {
-  if (boundary.image === ground || boundary.image === bomb) {
-    winCon += 1;
-  }
-});
 
 if (getCookie("win") === "true") {
   var tutClear = true;
@@ -601,6 +612,7 @@ function animate() {
       if (winCon === 0) {
         setCookie("win", "true");
         resultMenu.style.display = "flex";
+        document.getElementById("reloadDiv").style.display = "none";
 
         var prevArrCookie = prevArr.join("|");
         var posArrCookie = posArr.join("|");
@@ -693,7 +705,15 @@ function animate() {
   }
 
   document.getElementById("moveP").innerHTML =
-    "You made it <br /> in " + moves + " moves";
+    "You made it <br /> in " +
+    "<u>" +
+    moves +
+    "</u>" +
+    " moves <br /> with " +
+    "<u>" +
+    trys +
+    "</u>" +
+    " restarts";
 
   if (parseInt(getCookie("moves")) > maxMoves) {
     document.getElementById("winP").innerHTML = "You are <br/> not M.A.T.S";
@@ -711,6 +731,8 @@ if (innerWidth > innerHeight) {
 }
 
 if (getCookie("win") === "true") {
+  document.getElementById("reloadDiv").style.display = "none";
+
   document.getElementById("moveP").innerHTML =
     "You made it <br /> in " + parseInt(getCookie("moves")) + " moves";
 
@@ -1001,6 +1023,9 @@ document.getElementById("copy").onclick = function () {
       getCookie("moves") +
       "/" +
       maxMoves +
+      "\n" +
+      "Restarts-" +
+      getCookie("restarts") +
       "\n\n" +
       "🟩⬜️⬜️🟫⬜️\n🟩⬜️🟦🟫⬜️\n🟩🟩🟩⬜️⬜️" +
       "\n\n" +
@@ -1014,6 +1039,9 @@ document.getElementById("copy").onclick = function () {
       getCookie("moves") +
       "/" +
       maxMoves +
+      "\n" +
+      "Restarts-" +
+      getCookie("restarts") +
       "\n\n" +
       "🟥⬜️⬜️🟫⬜️\n🟥⬜️🟦🟫⬜️\n🟥🟥🟥⬜️⬜️" +
       "\n\n" +
@@ -1026,7 +1054,7 @@ document.getElementById("copy").onclick = function () {
 document.addEventListener(
   "click",
   function (e) {
-    const XY = getXY(canvas, e);
+    //const XY = getXY(canvas, e);
     //use the shape data to determine if there is a collision
 
     if (tutClear === false) {
@@ -1060,3 +1088,30 @@ document.addEventListener(
   },
   false
 );
+
+document.getElementById("restart").onclick = function () {
+  resetMap();
+  resetMap();
+
+  player.position.x = startPos.x + squareSize / 2;
+  player.position.y = startPos.y + squareSize / 2;
+
+  moves = 0;
+  player.image = ball;
+
+  keys.a.pressed = false;
+  keys.d.pressed = false;
+  keys.w.pressed = false;
+  keys.s.pressed = false;
+  lastKey = "";
+
+  trys++;
+
+  if (innerWidth < innerHeight) {
+    document.getElementById("restartCountDiv").innerHTML = "&#x21bb; = " + trys;
+  } else {
+    document.getElementById("restartCountDiv").innerHTML = "Restarts - " + trys;
+  }
+
+  setCookie("resets", trys);
+};
